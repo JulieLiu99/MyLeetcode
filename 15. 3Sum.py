@@ -3,7 +3,7 @@ class Solution:
         
         """
         Time O(nlogn + n^2): sort, one for loop + one while loop
-        Space O(1)
+        Space depends on sorting algorithm, otherwise O(1)
         """
         
         nums.sort()
