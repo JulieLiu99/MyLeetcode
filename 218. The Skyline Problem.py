@@ -54,7 +54,7 @@ class Solution:
         # 第一种是轮廓升高事件(L, -H)、第二种是轮廓降低事件(R, 0)
         # 轮廓升高事件(L, -H, R)中的R用于后面的最小堆
         events = [(L, -H, R) for L, R, H in buildings]
-        events += list({(R, 0, 0) for _, R, _ in buildings})
+        events += [(R, 0, 0) for _, R, _ in buildings]
 
         # 先根据L从小到大排序、再根据H从大到小排序(记录为-H的原因)
         # 这是因为我们要维护一个堆保存当前最高的轮廓
