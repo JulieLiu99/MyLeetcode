@@ -20,11 +20,14 @@ class Solution:
         
         toRemove = min(len(arr) - l - 1, r)     # one side removal
 		
-        for iL in range(l+1):                   # middle removal
-            if arr[iL] <= arr[r]:
-                toRemove = min(toRemove, r - iL - 1)
-            elif r < len(arr) - 1:
-                r += 1
+        iR = r
+        for iL in range(0, l+1):                # middle removal
+            if arr[iL] <= arr[iR]:
+                toRemove = min(toRemove, iR - iL - 1)
+            elif iR < len(arr) - 1:
+                iR += 1
+                if arr[iL] <= arr[iR]:
+                    toRemove = min(toRemove, iR - iL - 1)
             else:
                 break
         return toRemove
