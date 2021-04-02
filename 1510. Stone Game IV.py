@@ -13,7 +13,7 @@ class Solution:
         dp = [False] * (n+1)
         for i in range(1, n+1):
             for k in range(1, int(i**0.5)+1):
-                if dp[i - k*k] == 0:    # opponent loses
+                if dp[i - k*k] == False:    # opponent loses
                     dp[i] = True
                     break
         return dp[-1]
