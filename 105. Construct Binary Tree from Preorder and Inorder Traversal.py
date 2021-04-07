@@ -24,19 +24,24 @@ class Solution:
         """
         """
         Use list.pop(0) instead, which costs O(1)
-        
+        Use map_inorder instead of list.index(..) which takes O(N)
+        Use index instead of list as parameter
+
         Time O(n^2) 
         Space O(n^2) 
         
-        still not much faster
-        
         """
-        def build(preorder, inorder):
-            if inorder:
-                ind = inorder.index(preorder.pop())
-                root = TreeNode(inorder[ind])
-                root.left = build(preorder, inorder[0:ind])
-                root.right = build(preorder, inorder[ind+1:])
-                return root
+        map_inorder = {}    # instead of list.index(..) which takes O(N)
+        for i, val in enumerate(inorder): map_inorder[val] = i
+        
+        def build(low, high):
+            if low > high:
+                return None
+            root = TreeNode(preorder.pop())
+            ind = map_inorder[root.val]
+            root.left = build(low, ind-1)
+            root.right = build(ind+1, high)
+            return root
+            
         preorder.reverse()
-        return build(preorder, inorder)
+        return build(0, len(inorder)-1)
