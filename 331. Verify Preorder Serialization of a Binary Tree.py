@@ -6,13 +6,10 @@ class Solution:
         Space O(1)
         
         """
-        # remember how many empty slots we have
-        # non-null nodes occupy one slot but create two new slots
-        # null nodes occupy one slot
         
         p = preorder.split(',')
         
-        #initially we have one empty slot to put the root in it
+        # one empty slot for the root
         slot = 1
         for node in p:
             
@@ -22,11 +19,11 @@ class Solution:
                 
             # a null node?
             if node == '#':
-                # ocuppy slot
+                # a null node occupies one slot
                 slot -= 1
             else:
-                # create new slot
+                # a non-null node takes one slot (-1) and creates two more (+2)
                 slot += 1
         
-        #we don't allow empty slots at the end
+        # all slots must be taken
         return slot==0
