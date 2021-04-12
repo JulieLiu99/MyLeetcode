@@ -37,13 +37,13 @@ class Solution:
                 for _ in range(k):
                     # reverse
                     temp = cur.next
-                    cur.next = pre
-                    pre = cur
-                    cur = temp
+                    cur.next = pre     # cur -> pre
+                    pre = cur          # ^pre
+                    cur = temp         # move one step forward
                     
                     # k = 3 for example:
                     #
-                    #        cur temp  pre
+                    #       cur  temp         pre
                     # init  : a -> b -> c -> (next k-group)
                     #
                     #            cur  temp
@@ -51,16 +51,14 @@ class Solution:
                     #                   a ---^
                     #                  pre
                     #
-                    #                  cur  temp
+                    #                 cur  
                     # step 1:           c -> (next k-group)
                     #              b -> a ---^
                     #             pre
                     #
                     # step 2:                (next k-group)
                     #         c -> b -> a ---^
-                    #        pre        
-                    #                   l
-                    # finish: c -> b -> a -> (next k-group)
+                    #                   l     r
                     
                 # connect two k-groups
                 jump.next = pre
