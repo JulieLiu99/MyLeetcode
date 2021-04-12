@@ -27,7 +27,7 @@ class Solution:
         
         while l < r:
             m1 = (l + r) // 2       # middle point in nums1
-            m2 = half_len - m1          # middle point in nums2
+            m2 = half_len - m1      # middle point in nums2
             if nums1[m1] < nums2[m2-1]: 
                 l = m1 + 1              # m1 too small, increase it
             else:                       
