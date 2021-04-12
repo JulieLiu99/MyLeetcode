@@ -13,7 +13,7 @@ class Solution:
         # table[0][0]: the match status of two empty strings
         # check p[i-1] and s[j-1] to update table[i][j]
 
-        # Initialize the table with False. The first row is satisfied.
+        # Initialize the table with False
         table = [[False] * (len(s) + 1) for _ in range(len(p) + 1)]
 
         # Two empty strings always match
