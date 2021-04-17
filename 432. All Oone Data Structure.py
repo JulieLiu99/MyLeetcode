@@ -67,7 +67,7 @@ class AllOne:
             if cur.val - 1 == cur.prev.val:
                 new = cur.prev
             else:
-                new = Node(cur.val - 1, cur, cur.next)
+                new = Node(cur.val - 1, cur.prev, cur)
                 new.prev.next = new.next.prev = new
                 
             new.keys.add(key)
