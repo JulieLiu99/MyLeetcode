@@ -44,11 +44,10 @@ class NumArray(object):
         self.root = createTree(nums, 0, len(nums)-1)
             
             
-    def update(self, i, val):
+    def update(self, index, val):
         def updateVal(root, i, val):
             
-            #Base case. The actual value will be updated in a leaf.
-            #The total is then propogated upwards
+            #Base case. Update value in leaf.
             if root.start == root.end:
                 root.total = val
                 return val
@@ -60,23 +59,22 @@ class NumArray(object):
             else:            #otherwise, the right subtree
                 updateVal(root.right, i, val)
             
-            #Propogate the changes after recursive call returns
+            #Propogate the values after recursive call returns
             root.total = root.left.total + root.right.total
             return root.total
         
-        return updateVal(self.root, i, val)
+        return updateVal(self.root, index, val)
 
     
-    def sumRange(self, i, j):
+    def sumRange(self, left, right):
         def rangeSum(root, i, j):
             
-            #If the range exactly matches the root, we already have the sum
+            #If range matches with the node interval, return value
             if root.start == i and root.end == j:
                 return root.total
             
             mid = (root.start + root.end) // 2
             
-
             if j <= mid:        # entire interval in the left subtree
                 return rangeSum(root.left, i, j)
             elif i >= mid + 1:  # right subtree
@@ -84,7 +82,7 @@ class NumArray(object):
             else:               # interval is split
                 return rangeSum(root.left, i, mid) + rangeSum(root.right, mid+1, j)
         
-        return rangeSum(self.root, i, j)
+        return rangeSum(self.root, left, right)
                 
 
 
