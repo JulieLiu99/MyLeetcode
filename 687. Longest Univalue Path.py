@@ -8,7 +8,8 @@ class Solution:
     def longestUnivaluePath(self, root: TreeNode) -> int:
         """
         Postorder Traversal
-        Set the left/right to 0 whenever current node value != parent node value
+        At the end of each recursion, return the longest length using that node as the root.
+        Set left/right to 0 whenever current node != parent node value.
         
         Time: O(n)
         Space: O(n)
