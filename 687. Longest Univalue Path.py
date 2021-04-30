@@ -20,7 +20,8 @@ class Solution:
             if not node:
                 return 0
             
-            left, right = traverse(node.left, node.val), traverse(node.right, node.val)
+            left = traverse(node.left, node.val), 
+            right = traverse(node.right, node.val)
             self.longest = max(self.longest, left+right)
             
             if node.val == parent_val:
