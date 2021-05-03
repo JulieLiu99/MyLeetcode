@@ -49,12 +49,12 @@ class Solution:
         
         for sum_j in Sum:
             
-            # bisect.bisect_right(sortSum, sum_j - lower) returns the smallest index that sortSum[index] > sum_j - lower. 
-            # So all sums from 0 to index-1 inclusive will be <= sum_j - lower. 
+            # bisect.bisect_right(sortSum, sum_j - lower) returns the right-most index
+            # So that all sums from 0 to index-1 inclusive will be <= sum_j - lower. 
             # The count for those sums would be addCount(index - 1 + 1). 
             # Similarly,
-            # bisect.bisect_left(sortSum, sum_j - upper) returns the largest index that sortSum[index] < sum_j - upper + 1. 
-            # So all sums from index+1 to end inclusive will be >= sum_j - upper. 
+            # bisect.bisect_left(sortSum, sum_j - upper) returns left-most index
+            # So that all sums from index+1 to end inclusive will be >= sum_j - upper. 
             
             sum_i_count = addCount(bisect.bisect_right(sortSum, sum_j - lower)) -             
                           addCount(bisect.bisect_left(sortSum, sum_j - upper))
