@@ -6,9 +6,15 @@ class Solution:
         Range_Sum = Sum[j] - Sum[i-1]
         lower <= Sum[j] - Sum[i-1] <= upper
         
-        Find i so that: 
-        - Sump[j] >= Sum[i-1] + lower => count of larger numbers after self
-        - Sump[j] <= Sum[i-1] + upper => count of smaller numbers after self
+        nums        [X X X X X X]
+                       i-----j
+        sortSum   [0 X X X X X X]
+        BITree  [0 0 X X X X X X]
+        
+        For every Sum[j] from large to small:     
+            Count i that satisfies: 
+            - Sum[i-1] <= Sum[j] - lower
+            - Sum[i-1] >= Sum[j] - upper
         
         Store the index of sortSum in the BITree. 
         
@@ -23,7 +29,7 @@ class Solution:
         Sum = [0] * (n + 1)
         BITree = [0] * (n + 2)
 
-        def addSum(x):
+        def addCount(x):
             s = 0
             while x:
                 s += BITree[x]
@@ -43,12 +49,15 @@ class Solution:
         
         for sum_j in Sum:
             
-            # bisect.bisect_right(sortSum, sum_j - lower) returns the smallest index that sortSum[ind] >= sum_j - lower. 
-            # bisect.bisect_left(sortSum, sum_j - upper) returns the largest index that sortSum[ind] <= sum_j - upper. 
-            # So all sums from index 0 to ind-1 inclusive will be <= sum_j - lower. 
-            # The count for those sums would be search(ind - 1 + 1). 
+            # bisect.bisect_right(sortSum, sum_j - lower) returns the smallest index that sortSum[index] > sum_j - lower. 
+            # So all sums from 0 to index-1 inclusive will be <= sum_j - lower. 
+            # The count for those sums would be addCount(index - 1 + 1). 
+            # Similarly,
+            # bisect.bisect_left(sortSum, sum_j - upper) returns the largest index that sortSum[index] < sum_j - upper + 1. 
+            # So all sums from index+1 to end inclusive will be >= sum_j - upper. 
             
-            sum_i_count = addSum(bisect.bisect_right(sortSum, sum_j - lower)) -                                         addSum(bisect.bisect_left(sortSum, sum_j - upper))
+            sum_i_count = addCount(bisect.bisect_right(sortSum, sum_j - lower)) -             
+                          addCount(bisect.bisect_left(sortSum, sum_j - upper))
             res += sum_i_count
             
             # Since index of BITree starts from 1, 
