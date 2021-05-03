@@ -44,7 +44,7 @@ class Solution:
         for i in range(n):
             Sum[i+1] = Sum[i] + nums[i]
             
-        sortSum = sorted(Sum) # descending
+        sortSum = sorted(Sum) # ascending
         res = 0
         
         for sum_j in Sum:
