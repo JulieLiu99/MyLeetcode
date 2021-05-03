@@ -1,4 +1,3 @@
-# I Don't Understand This
 
 """
 Solution 1
@@ -15,7 +14,6 @@ Time O(nlogn)
 Space O(n)
 
 """
-
 """
 class Solution(object):
     def reversePairs(self, nums):
@@ -24,11 +22,11 @@ class Solution(object):
             return 0
         
         nnums = list(set(nums+[2*j for j in nums]))
-        nnums.sort() # descending order
-        tree = BIT(len(nnums))
+        sorted_nums = sorted(nnums) # ascending order
+        tree = BIT(len(sorted_nums))
         
         num_idx = {}
-        for idx, num in enumerate(nnums):
+        for idx, num in enumerate(sorted_nums):
             num_idx[num] = idx+1
         
         count_of_i = 0
@@ -57,17 +55,21 @@ class BIT():
         return s
 
 """
-
 """
 Solution 2
 
 Merge Sort
 
 count = left reverse pair + right reverse pair
+In each mergesort(), use 2 sliding pointers i (till mid), j (after mid) to count
 
 split reverse pair
 
+Time O(nlogn): each recursion O(n) to merge two sorted array, O(n) to count
+Space O(n)
+
 """
+
 class Solution:
     def reversePairs(self, nums: List[int]) -> int:
 
@@ -77,14 +79,19 @@ class Solution:
             
             mid = l + (r-l) // 2
             count = mergesort(l, mid) + mergesort(mid+1, r)
-
+            
+            nums[l:mid+1] = sorted(nums[l:mid+1]) # sort 1st half ascending
+            nums[mid+1:r+1] = sorted(nums[mid+1:r+1]) # sort 2nd half ascending
+            
+            i = l
             j = mid + 1
-            for i in range(l, mid+1):
-                while j <= r and nums[i] > 2*nums[j]:
+            while (i <= mid and j <= r):
+                if nums[i] > 2*nums[j]:
+                    count += mid - i + 1 # all i's that form reverse pairs with j
                     j += 1
-                count += j - mid - 1
+                else:
+                    i += 1
 
-            nums[l:r+1] = sorted(nums[l:r+1])
             return count
 
         return mergesort(0, len(nums)-1)
