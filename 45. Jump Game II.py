@@ -3,6 +3,8 @@ class Solution:
         """
         Greedy 
         
+        https://www.youtube.com/watch?v=dJ7sWiOoK7g
+        
         l, r: current reacheable window
         
         Time O(n)
