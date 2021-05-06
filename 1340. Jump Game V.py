@@ -14,26 +14,21 @@ class Solution:
         N = len(arr)
         dp = [1] * N
         
-        for i in range(N):
-            
-            idx = valueIndex[i][1]
-            dp[idx] = 1
-            
+        for val, idx in valueIndex[1:]:
+                        
             for j in range(1, d+1):
-                if idx - j >= 0 and arr[idx - j] < arr[idx]:
+                if idx - j >= 0 and arr[idx - j] < val:
                     dp[idx] = max(dp[idx], dp[idx - j] + 1)
                 else:
                     break
                     
             for j in range(1, d+1):
-                if idx + j < N and arr[idx + j] < arr[idx]:
+                if idx + j < N and arr[idx + j] < val:
                     dp[idx] = max(dp[idx], dp[idx + j] + 1)
                 else:
                     break
         
         return max(dp)
-
-       
 
 
 
