@@ -12,7 +12,7 @@ class Solution:
         """
         valueIndex = sorted([(x, i) for i, x in enumerate(arr)])
         N = len(arr)
-        dp = [-1] * N
+        dp = [1] * N
         
         for i in range(N):
             
@@ -33,6 +33,7 @@ class Solution:
         
         return max(dp)
 
+       
 
 
 
