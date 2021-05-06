@@ -9,10 +9,10 @@ class Solution:
         
         [
         del valueToIndexes[arr[node]]:
-        Imagine, we have arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 2]. The first time we see 1, we visit all other 1s. Second time we see 1, we do not need to visit its neighbors of same value. Without this optimization time complexity could be O(n^2).
+        Imagine, we have arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 2]. The first time we see 1, we visit all other 1s. Second time we see 1, we do not need to visit its indexes of same value. Without this optimization time complexity could be O(n^2).
         ]
         
-        3. Do classical bfs: Extract node from queue, visit left and right neighbors, and visit all of its same value neighbors if not yet.
+        3. Do classical bfs: Extract node from queue, visit left and right nodes, and visit all indexes of same value if not yet.
         
         Time O(N)
         Space O(N)
@@ -33,11 +33,13 @@ class Solution:
         
         while queue:
             for _ in range(len(queue)):
+                
                 node = queue.popleft()
-                nxt = []
                 
                 if node == n-1: # if reach last index
                     return steps
+                
+                nxt = []
                 
                 if node > 0:
                     nxt.append(node-1)
@@ -47,9 +49,9 @@ class Solution:
                     nxt.extend(valueToIndexes[arr[node]])
                     del valueToIndexes[arr[node]] # so that it won't be appended to queue again
                     
-                for neighbor in nxt:
-                    if neighbor not in seen:
-                        queue.append(neighbor)
-                        seen.add(neighbor)
+                for idx in nxt:
+                    if idx not in seen:
+                        queue.append(idx)
+                        seen.add(idx)
                     
             steps += 1
