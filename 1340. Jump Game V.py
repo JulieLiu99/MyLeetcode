@@ -6,7 +6,7 @@ class Solution:
         The number of jumps you can make from arr[i] only depends on the array members that are less than arr[i]. 
         Sort the array first and deduce the results of the bigger elements from the smaller ones.
         
-        Time O(nLogn)
+        Time O(nd + nlogn)
         Space O(n) to memoize jumps for every index.
         
         """
@@ -32,5 +32,7 @@ class Solution:
                     break
         
         return max(dp)
+
+
 
 
