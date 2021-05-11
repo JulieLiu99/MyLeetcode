@@ -29,12 +29,12 @@ class Solution:
 
     
     def largestNumber(self, nums: List[int]) -> str:
-        for i in range(len(nums), 0, -1):
-            maxval = 0
-            for j in range(i):
-                if not self.compare(nums[j], nums[maxval]):
-                    maxval = j
-            nums[maxval], nums[i-1] = nums[i-1], nums[maxval]
+        for i in range(len(nums)-1, -1, -1):
+            max_idx = 0
+            for j in range(i+1):
+                if not self.compare(nums[j], nums[max_idx]):
+                    max_idx = j
+            nums[max_idx], nums[i] = nums[i], nums[max_idx]
         return str(int("".join(map(str, nums))))
     
     
