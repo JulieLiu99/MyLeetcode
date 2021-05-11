@@ -30,11 +30,11 @@ class Solution:
     
     def largestNumber(self, nums: List[int]) -> str:
         for i in range(len(nums), 0, -1):
-            minval = 0
+            maxval = 0
             for j in range(i):
-                if not self.compare(nums[j], nums[minval]):
-                    minval = j
-            nums[minval], nums[i-1] = nums[i-1], nums[minval]
+                if not self.compare(nums[j], nums[maxval]):
+                    maxval = j
+            nums[maxval], nums[i-1] = nums[i-1], nums[maxval]
         return str(int("".join(map(str, nums))))
     
     
