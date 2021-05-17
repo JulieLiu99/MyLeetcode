@@ -26,9 +26,9 @@ class Solution:
         start_end = collections.defaultdict(list)
         for i, char in enumerate(s): 
             if char not in start_end: 
-                start_end[char] = [i, i+1]   # update (start, end) position
+                start_end[char] = [i, i]   # update (start, end) position
             else: 
-                start_end[char][1] = i+1     # update end position 
+                start_end[char][1] = i     # update end position 
         
         # input string has only one unique char
         if len(start_end) == 1: return [s]
@@ -41,7 +41,7 @@ class Solution:
             r = tmpr = start_end[char][1]
             while True:
                 # set(): convert any of the iterable to sequence of iterable elements with distinct elements
-                interval = set(s[tmpl:tmpr])
+                interval = set(s[tmpl:tmpr+1])
                 for ic in interval:
                     tmpl = min(tmpl, start_end[ic][0])
                     tmpr = max(tmpr, start_end[ic][1])
@@ -57,6 +57,6 @@ class Solution:
         prev_r = 0
         for l, r in pairs:
             if l >= prev_r:
-                res.append(s[l:r])
+                res.append(s[l:r+1])
                 prev_r = r
         return res
