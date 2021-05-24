@@ -17,7 +17,7 @@ class Solution:
         """
         
 #         def score(s, l, r):
-#             if r - l == 1:
+#             if r - l == 1: # ()
 #                 return 1
 #             count=0
 #             for i in range(l, r):
@@ -25,7 +25,7 @@ class Solution:
 #                     count += 1
 #                 else:    # ')'
 #                     count -= 1
-#                 if count == 0:
+#                 if count == 0: # balanced, Case 2
 #                     return score(s, l ,i) + score(s, i+1, r)
 #             return 2 * score(s, l+1, r-1)
         
@@ -49,14 +49,15 @@ class Solution:
         
         """
         score = 0
-        d = -1
+        d = 0
         for i, c in enumerate(s):
             if c == "(":
                 d += 1
             else:
                 d -= 1
             if s[i:i+2] == "()":
-                score += 1 << d
+                score += 1 << (d-1)
         return score
 
+        
 
