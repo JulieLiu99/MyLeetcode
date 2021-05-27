@@ -8,23 +8,23 @@ class Solution:
         
         """
         l = 0
-        count = 0
+        l_count = 0
         res = 0
         s = 0
         for r, num in enumerate(nums):
             s += num
             if num == 1:
-                count = 0
+                l_count = 0
             while l<= r and s >= goal:
                 if s == goal:
-                    count += 1
+                    l_count += 1
                 s -= nums[l]
                 l += 1
-            res += count
+            res += l_count
         return res
     
         """
-        Pre-sum
+        Hash + Prefix Sum
         
         Count the occurrence of all prefix sum.
 
