@@ -25,15 +25,11 @@ class Solution:
 #                 pos[i] = 1 + pos[i - 1]
 #                 if neg[i - 1] > 0:
 #                     neg[i] = 1 + neg[i - 1]  
-#                 else:
-#                     neg[i] = 0
                     
 #             elif nums[i] < 0:
+#                 neg[i] = 1 + pos[i - 1]
 #                 if neg[i - 1] > 0:
 #                     pos[i] = 1 + neg[i - 1] 
-#                 else:
-#                     pos[i] = 0
-#                 neg[i] = 1 + pos[i - 1]
                 
 #             ans = max(ans, pos[i])
             
@@ -50,7 +46,6 @@ class Solution:
 
         """
 
-
         n = len(nums)
         pos, neg = 0, 0
         
@@ -66,15 +61,11 @@ class Solution:
                 pos2 = 1 + pos
                 if neg > 0:
                     neg2 = 1 + neg
-                else:
-                    neg2 = 0
                     
             elif nums[i] < 0:
+                neg2 = 1 + pos
                 if neg > 0:
                     pos2 = 1 + neg
-                else:
-                    pos2 = 0
-                neg2 = 1 + pos
                 
             ans = max(ans, pos2)
             
