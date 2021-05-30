@@ -14,7 +14,7 @@ class Solution:
         
         Use a hashtabke to store the first index of a given state. 
         If the same state occurs again (i -> j), we've found a subarray (i+1 -> j) where all vowels occur even times.
-        Length = j - (i+1) = j - i
+        Length = j - (i+1) + 1 = j - i
         
         [e[baa]e]
         len = 3, s = "baa"
