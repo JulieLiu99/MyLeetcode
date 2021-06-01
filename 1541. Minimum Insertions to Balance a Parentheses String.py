@@ -1,55 +1,52 @@
 class Solution:
-    def minInsertions(self, s: str) -> int:
+    def removeInvalidParentheses(self, s: str) -> List[str]:
+        """
+        BFS
+        
+        Let's model the problem as a graph,
+        Node: all possible string by removing parenthesis (The start node is `s`).
+        Edge (from u to v): by removing a parentheses of u.
+        
+        As a result, the problem becomes to get the shortest distance from s to a valid node (assuming at level l) in the first place; then get all valid nodes within level l.
+        Shortest-path problem is natural to BFS.
+        
+        Time O(n2^n): validate (which takes N time) every combination of taking/not taking every parenthesis (which there are 2^N combinations).
+        Space (2^n): storing all combinations in a level.
         
         """
-        
-        res represents the number of left/right parentheses already added.
-        right represents the number of right parentheses needed.
+        # set is used here in order to avoid duplicate element
+        level = {s}
+        while True:
+            valid = []
+            for elem in level:
+                if self.isValid(elem):
+                    valid.append(elem)
+            if valid:
+                return valid
 
-        1) case )
-        If we meet a right parentheses , right--.
-        If right < 0, we need to add a left parentheses before it.
-        Then we update right += 2 and res++
-        This part is easy and normal.
-
-        2) case (
-        If we meet a left parentheses,
-        we check if we have odd number ')' before.
-        If we have odd ')' before, we want right parentheses in paires.
-        So add one ')' here, then update right--; res++;.
-        Note that this part is not necessary if two consecutive right parenthesis not required.
-        Because we have (, we update right += 2.
-        
-        
-        E.g. ((()(
-        i=0, we have ( it means we need two right parenthesis (they are in pair) so.. right+=2 => res =0, right =2
-        i=1, again we have ( it means we need two right parenthesis (they are in pair) so.. right+=2 => res =0, right =4
-        i=2, again we have ( it means we need two right parenthesis (they are in pair) so.. right+=2 => res =0, right =6
-        i=3, we have ) we subtract one from right. so.. right-- => res =0, right =5
-        i=4, we have ( but here right is odd so we need to make it even with right-- and increment res++ => res =1, right =4. Also, as we have got a left parenthesis then we need two right parenthesis (they are in pair) so.. right+=2 => res =1, right =6
-
-        finally ans is res + right => 1 + 6 == 7
-
-
-        Time O(N)
-        Space O(1)
-        
-        """
-        
-        res = right = 0
-        
+            new_level = set()
+            # BFS
+            # {'()())()'}
+            # 0  )())()
+            # 1 ( ())()
+            # 2 () ))()
+            # 3 ()( )()
+            # 4 ()() ()
+            # 5 ()()) )
+            # 6 ()())( 
+            # {'()()()', '()))()', ')())()', '(())()', '()())(', '()()))'}
+            for elem in level:
+                for i in range(len(elem)):
+                    new_level.add(elem[:i] + elem[i + 1:])
+            level = new_level
+    
+    def isValid(self,s):
+        count = 0
         for c in s:
-            
             if c == '(':
-                if right % 2:   # odd ) before this, add one ) 
-                    right -= 1
-                    res += 1
-                right += 2      
-                
-            if c == ')':
-                right -= 1
-                if right < 0:   # ) is extra, add ( before this
-                    right += 2
-                    res += 1
-                    
-        return right + res
+                count += 1
+            elif c == ')':
+                count -= 1
+                if count < 0:
+                    return False
+        return count == 0
