@@ -37,13 +37,15 @@ class Solution:
         
         # find min x such that test(x) > maxSum, return (x-1)
         l = 1
-        r = maxSum + 1
+        r = maxSum
         
         while l < r:
-            m = l + (r - l) // 2
+            # whenever we have l = m, use m = l + (r - l + 1) // 2
+            # to prevent infinite loop when l = 3, r = 4, m = 3 forever
+            m = l + (r - l + 1) // 2
             if test(m) <= maxSum:
-                l = m + 1
+                l = m
             else:
-                r = m 
+                r = m - 1
                 
-        return l - 1
+        return l
