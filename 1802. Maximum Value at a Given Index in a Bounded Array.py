@@ -21,7 +21,7 @@ class Solution:
             if index > x-1:
                 # [1, 1, 1, *2, 1]
                 #  0  1  2   3  4
-                left = x * (x - 1) / 2 + (index - x + 1)
+                left = x * (x - 1) / 2 + (index - (x - 1))
             else:
                 left = (x - 1 + x - index) * index / 2
                 
@@ -29,9 +29,9 @@ class Solution:
             if n - index - 1 > x - 1:
                 # [1, *2, 1, 1]
                 #  0   1  2  3 
-                right = x * (x - 1) / 2 + (n - index - x)
+                right = x * (x - 1) / 2 + (n - index - 1 - (x - 1))
             else:
-                right = (x + x - n + index) * (n - index - 1)  / 2 
+                right = (x - 1 + x - (n - index - 1)) * (n - index - 1)  / 2 
                 
             return left + x + right 
         
