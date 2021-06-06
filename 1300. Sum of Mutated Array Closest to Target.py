@@ -3,7 +3,7 @@ class Solution:
         """
         Binary Search
         
-        Time O(n + log(max(arr)) log(n)): O(n) for preSum, log(max(arr))) for # of binary search, and O(log(n)) for each bisect operation.
+        Time O(nlogn + log(max(arr)) log(n)): O(nlogn) for sort, O(n) for preSum, log(max(arr))) for # of binary search, and O(log(n)) for each bisect operation.
         Space O(n)
         
         """
