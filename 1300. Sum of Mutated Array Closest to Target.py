@@ -3,8 +3,8 @@ class Solution:
         """
         Binary Search
         
-        Time O(N + log(max(arr)))
-        Space O(N)
+        Time O(n + log(max(arr)) log(n)): O(n) for preSum, log(max(arr))) for # of binary search, and O(log(n)) for each bisect operation.
+        Space O(n)
         
         """
         def getSum(val):
@@ -36,5 +36,4 @@ class Solution:
             return l
         else:
             return r
-
 
