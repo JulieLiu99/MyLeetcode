@@ -24,7 +24,7 @@ class Solution:
             else:
                 counter[word] = 1
 
-        # Loop over first word length
+        # Loop over word length
         for i in range(word_l):
             start = i
             sub_counter = defaultdict(int)
@@ -59,3 +59,5 @@ class Solution:
                     count = 0
 
         return ans
+
+
