@@ -10,7 +10,7 @@ Priority Queue
 ___\__/___|_\_____|__\_|___/__|___\
 https://www.youtube.com/watch?v=Fqal25ZgEDo
 
-Time O(n + max number of elements in a list * log(number of lists))
+Time O(n + n * log(number of lists))
 Space O(n)
 
 """
@@ -27,7 +27,7 @@ class Solution:
         
         max_val = max([List[0] for List in nums]) 
         
-        smallest_range = -1e9, 1e9                                       
+        smallest_range = -1e5, 1e5                                     
         
         while heap:
 
@@ -37,11 +37,11 @@ class Solution:
             if max_val - min_val < smallest_range[1] - smallest_range[0]:  
                 smallest_range = min_val, max_val
                 
-            # once any one of the list is exhausted, return the range
+            # if list is exhausted, return the range
             if num_index + 1 == len(nums[list_index]):                   
                 return smallest_range
             
-            # get the next element from the list that has the min value
+            # get the next element from the list that has the current min value
             next_num = nums[list_index][num_index+1]                     
             max_val = max(max_val, next_num)
             heapq.heappush(heap, (next_num, list_index, num_index+1))
