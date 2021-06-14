@@ -38,7 +38,7 @@ class RangeModule:
     def removeRange(self, left, right):
         
         #   [5, 25] remove [10, 20]
-        #   start = 1, end = 3, both odd, both inside range
+        #   start = 1, end = 1, both odd, both inside range
         #   track becomes [5, 10, 20, 25]
         
         #   [5, 25] remove [10, 30]
