@@ -6,6 +6,7 @@ class Solution:
         h = [9, 9, 6, 0, 6, 6, 9]
         v = [+1,+1,-1,-1,-1,-1,+1]
         
+        score(v[0:i]) = v[0] + ... + v[i]
         Reduce the problem to find target_sum = 1
         if score(v[0:n]) > 0, return n
         
