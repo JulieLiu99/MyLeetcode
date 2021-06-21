@@ -3,11 +3,22 @@ class Solution:
         """
         Search by pointers
         Thinking through heights
+        Try not to touch front part -> so that we find only the next larger nums
+        
+        1) Swap the last "ascending" position with the last num bigger than it
+        2) Make nums from last peak onwards ascending
         
         1 2 3      1 3 2
             /        /\
           /         /  \
         /          /
+
+                    l r       nums
+                        [1, 3, 5, 2, 8, 4]
+                                  ^ last ascending
+        after 1)    4 5 [1, 3, 5, 4, 8, 2]
+                                     ^ last peak 
+        after 2)    5 4 [1, 3, 5, 4, 2, 8]
         
         Time O(n)
         Space O(1)
@@ -38,15 +49,9 @@ class Solution:
         l = i
         r = len(nums)-1  
         
-        """
-        l r      nums
-            [1, 5, 2, 8, 3]
-        3 4 [1, 5, 3, 8, 2]
-        4 3 [1, 5, 3, 2, 8]
-        """
         while l < r:
             nums[l], nums[r] = nums[r], nums[l]
             l += 1 
             r -= 1
-            print(l, r, nums)
+        
         
