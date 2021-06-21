@@ -2,6 +2,7 @@ class Solution:
     def nextPermutation(self, nums: List[int]) -> None:
         """
         Search by pointers
+        Thinking through heights
         
         1 2 3      1 3 2
             /        /\
@@ -10,11 +11,12 @@ class Solution:
         
         Time O(n)
         Space O(1)
+        
         """
         
         i = j = len(nums)-1
         
-        # find the last peak of position i -> to be swapped one position earlier
+        # find the last peak of position i 
         while i > 0 and nums[i-1] >= nums[i]:
             i -= 1
          
@@ -23,7 +25,7 @@ class Solution:
             nums.reverse()
             return 
         
-        k = i - 1   # the last "ascending" position 
+        k = i - 1   # k is the last "ascending" position 
         
         # find the last j such that its value bigger than the last "ascending" position 
         while nums[j] <= nums[k]:
