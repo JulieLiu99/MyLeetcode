@@ -1,12 +1,15 @@
 class Solution:
     def nextPermutation(self, nums: List[int]) -> None:
         """
-        Do not return anything, modify nums in-place instead.
+        Search by pointers
         
         1 2 3      1 3 2
             /        /\
           /         /  \
         /          /
+        
+        Time O(n)
+        Space O(1)
         """
         
         i = j = len(nums)-1
@@ -44,3 +47,4 @@ class Solution:
             l += 1 
             r -= 1
             print(l, r, nums)
+        
