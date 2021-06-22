@@ -5,6 +5,7 @@ class Solution:
         Recursive
         
         """
+        # countAndSay(1) is base case
         if n == 1: return "1"
         
         s = self.countAndSay(n-1)
@@ -30,7 +31,7 @@ class Solution:
         # initilize result for countAndSay(1) = "1" 
         result = '1'
         
-        # already took care of first char
+        # already took care of countAndSay(1)
         for _ in range(n-1):
             s = result
             result = ''
