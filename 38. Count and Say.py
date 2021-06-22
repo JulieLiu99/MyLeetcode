@@ -5,22 +5,22 @@ class Solution:
         Recursive
         
         """
-#         if n == 1: return "1"
+        if n == 1: return "1"
         
-#         s = self.countAndSay(n-1)
+        s = self.countAndSay(n-1)
         
-#         i, char, tmp = 0, s[0], ''
+        i, char, tmp = 0, s[0], ''
         
-#         for j in range(1, len(s)):
-#             # end of a contiguous section 
-#             if s[j] != char:
-#                 tmp += str(j-i) + char
-#                 i = j
-#                 char = s[j]
-#         # last contiguous section 
-#         tmp += str(len(s)-i) + char
+        for j in range(1, len(s)):
+            # end of a contiguous section 
+            if s[j] != char:
+                tmp += str(j-i) + char
+                i = j
+                char = s[j]
+        # last contiguous section 
+        tmp += str(len(s)-i) + char
         
-#         return tmp
+        return tmp
     
 
         """
@@ -32,16 +32,16 @@ class Solution:
         
         # already took care of first char
         for _ in range(n-1):
-            prev = result
+            s = result
             result = ''
             j = 0
             # start of a unique char
-            while j < len(prev):
-                char = prev[j]
+            while j < len(s):
+                char = s[j]
                 count = 1
                 j += 1
                 # a contiguous section 
-                while j < len(prev) and prev[j] == char:
+                while j < len(s) and s[j] == char:
                     count += 1
                     j += 1
                 result += str(count) + str(char)
