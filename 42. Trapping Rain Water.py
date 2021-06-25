@@ -2,13 +2,11 @@ class Solution:
     def trap(self, height: List[int]) -> int:
         
         """
-
         For column_i, the rain it can trap:
         r[i] = min(max(h[0~i]), max(h[i~n-1])) - h[i]
 
         ans = sum(r[i])
-
-        -----------------------
+        
         Approach 1: Brute Force
 
         For each column, 
@@ -17,7 +15,8 @@ class Solution:
         Time O(n^2)
         Space O(1)
 
-        --------------------------
+        """
+        """
         Approach 2: DP, prefix max
 
         Pre-compute the max of h[0~i] and h[i~n-1] in O(n)
@@ -31,8 +30,30 @@ class Solution:
         For each column, query the max is reduced to O(1)
         Time O(n)
         Space O(n)
+        
+        """
+#         n = len(height) 
+#         if n == 0: return 0
+        
+#         l = [height[0]] + [0] * (n-1)
+#         r = [0] * (n-1) + [height[n-1]]
+#         ans = 0
+        
+#         # record max_l for each index 1...n-1
+#         for i in range(1, n):
+#             l[i] = max(l[i-1], height[i])
+            
+#         # record max_r for each index n-2...0
+#         for i in range(n-2, -1, -1):
+#             r[i] = max(r[i+1], height[i])
 
-        ------------------------
+#         # collect water
+#         for i in range(n):
+#             ans += min(l[i], r[i]) - height[i]
+            
+#         return ans
+    
+        """
         Approach 3: Two pointers
 
         Use two variables to track the max_l and max_r so far.
