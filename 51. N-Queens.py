@@ -8,28 +8,27 @@ class Solution:
         Space O(n^2)
         
         """
+        # check whether nth row queen can be placed in that column
+        def valid(row):
+            for pre_row in range(row):
+                # if distance between rows equals distance between cols, the two points must be vertices of a square and must be in same diagonal
+                if abs(nums[pre_row] - nums[row]) == row - pre_row or nums[pre_row] == nums[row]:
+                    return False
+            return True
+        
+        # nums is a one-dimension array, like [1, 3, 0, 2] means
+        # first row queen is placed in column 1, second row queen is placed
+        # in column 3, etc.
+        def dfs(row, path):
+            if row == n:
+                res.append(path)
+                return  # backtracking
+            for col in range(n):
+                nums[row] = col
+                if  valid(row):  # pruning
+                    dfs(row + 1, path + ["." * col + "Q" + "." * (n-col-1)])
         
         res = []
-        self.dfs([-1]*n, 0, [], res)
+        nums = [-1]*n
+        dfs(0, [])
         return res
-
-    # nums is a one-dimension array, like [1, 3, 0, 2] means
-    # first queen is placed in column 1, second queen is placed
-    # in column 3, etc.
-    def dfs(self, nums, index, path, res):
-        if index == len(nums):
-            res.append(path)
-            return  # backtracking
-        for i in range(len(nums)):
-            nums[index] = i
-            if self.valid(nums, index):  # pruning
-                tmp = "."*len(nums)
-                self.dfs(nums, index+1, path+[tmp[:i]+"Q"+tmp[i+1:]], res)
-
-    # check whether nth queen can be placed in that column
-    def valid(self, nums, index):
-        for i in range(index):
-            # if distance between nums[i] and nums[index] equals distance between index and i, the two points must be vertices of a square and must be in same diagonal
-            if abs(nums[i]-nums[index]) == index -i or nums[i] == nums[index]:
-                return False
-        return True
