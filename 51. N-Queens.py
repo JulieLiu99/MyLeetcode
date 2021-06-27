@@ -4,15 +4,26 @@ class Solution:
         """
         Recursive DFS
         
+        Each row one and only one queen
+        Each column one and only one queen
+        Each diagnal line one and only one queen
+        
+        num is a size n list representing positions of queens
+        num[row] = col
+        
+        Fill in the queens row by row, until all rows are filled
+        For each row, check all columns to find good position
+        For each check, make sure same diagonal line and column not taken
+        
         Time O(n^2)
         Space O(n^2)
         
         """
         # check whether nth row queen can be placed in that column
         def valid(row):
+            # check diagonal line and column not taken by previous queens in any rows
             for pre_row in range(row):
-                # if distance between rows equals distance between cols, the two points must be vertices of a square and must be in same diagonal
-                if abs(nums[pre_row] - nums[row]) == row - pre_row or nums[pre_row] == nums[row]:
+                if nums[pre_row] == nums[row] or abs(nums[row] - nums[pre_row]) == row - pre_row:
                     return False
             return True
         
@@ -25,7 +36,9 @@ class Solution:
                 return  # backtracking
             for col in range(n):
                 nums[row] = col
-                if  valid(row):  # pruning
+                if row == 0:
+                    dfs(row + 1, path + ["." * col + "Q" + "." * (n-col-1)])
+                elif valid(row):  # pruning
                     dfs(row + 1, path + ["." * col + "Q" + "." * (n-col-1)])
         
         res = []
