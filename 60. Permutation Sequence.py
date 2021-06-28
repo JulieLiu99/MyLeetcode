@@ -24,7 +24,6 @@ class Solution:
             
             digit_group_size = factorial(n-i-1)
             digit = k//digit_group_size
-            
 
             # if no reminder, stay in previous digit group
             if k % digit_group_size == 0: 
