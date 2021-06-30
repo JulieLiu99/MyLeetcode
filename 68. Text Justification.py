@@ -35,6 +35,7 @@ class Solution:
                     i = 1
                     while i <= len(res[-1])-1:
                         # res[-1][i] is a new space after end of word
+                        # add extra space before it
                         if res[-1][i] == " " and res[-1][i-1] != " ":
                             if left_space:
                                 res[-1] = res[-1][:i] + " "*(even_space+1) + res[-1][i:]
@@ -42,6 +43,7 @@ class Solution:
                                 i += even_space+1
                             else:
                                 res[-1] = res[-1][:i] + " "*even_space + res[-1][i:]
+                                i += even_space
                         i += 1
                 # if only one word, append space to right
                 elif extra_space and w_counter == 1:
