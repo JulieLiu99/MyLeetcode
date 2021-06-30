@@ -4,17 +4,14 @@ class Solution:
         """
         DP
         
-        Time O(len(word1)*len(word2))
-        Space O(len(word1))
-        
         dp[i][j] = match all to way to word1[i-1] and word2[j-1]
         
         dp[i-1][j-1] + 1: replace word1[i-1] with word2[j-1]
         dp[i][j-1] + 1: add word2[j-1]
         dp[i-1][j] + 1: delete word1[i-1] 
         
-        Time O(n^2)
-        Space O(n^2)
+        Time O(nm)
+        Space O(nm)
         
         """
         
