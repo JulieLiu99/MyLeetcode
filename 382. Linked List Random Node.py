@@ -35,13 +35,15 @@ class Solution:
         """
         Returns a random node's value.
         """
-        count = result = 0
-        cur = self.head
-        while cur:
-            count += 1
+        current = self.head
+        result = current.val
+        count = 1
+        
+        while current:
             if random.random() <= 1/count:  # change to new val
-                result = cur.val
-            cur = cur.next  
+                result = current.val
+            current = current.next  
+            count += 1
         return result
 
 
