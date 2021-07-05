@@ -3,6 +3,10 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         
+        Two pointers
+        l markes sorted up to it
+        r search for nums to switch with l
+        
         Time O(n): l travels n, r travels O(3n)
         Space O(1)
         
