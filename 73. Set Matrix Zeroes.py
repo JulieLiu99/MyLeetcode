@@ -15,13 +15,13 @@ class Solution:
         
 #         n = len(matrix)
 #         m = len(matrix[0])
+#         if m == 0 or n == 0: return
         
 #         for row in range(n):
 #             for col in range(m):
 #                 if matrix[row][col] == 0:
 #                     rows.add(row)
-#                     cols.add(col)
-                    
+#                     cols.add(col)              
         
 #         for row in rows:
 #             matrix[row] = [0 for _ in range(m)]
@@ -30,8 +30,7 @@ class Solution:
 #             for row in range(n):
 #                 matrix[row][col] = 0
                 
-#         return matrix
-
+                
         """
         'a' means to be turned to 0
         
@@ -44,6 +43,7 @@ class Solution:
 
         n = len(matrix)
         m = len(matrix[0])
+        if m == 0 or n == 0: return
         
         for i in range(n):
             for j in range(m):
@@ -59,5 +59,3 @@ class Solution:
             for j in range(m):
                 if matrix[i][j] == 'a':
                     matrix[i][j] = 0
-                
-        return matrix 
