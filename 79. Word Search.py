@@ -42,7 +42,7 @@ class Solution:
     
         for row in range(height):
             for col in range(width):
-                # check whether can find word, starting at (i,j) position 
+                # check whether can find word, starting at (row, col) position 
                 if dfs(board, row, col, 0):
                     return True
                 
