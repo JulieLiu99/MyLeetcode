@@ -67,13 +67,14 @@ class Solution:
         dummy.next = head
         
         while head and head.next:
-            
+            nextt = head.next
             # head is start of duplicate
-            if head.val == head.next.val:
-                while head and head.next and head.val == head.next.val:
-                    head = head.next
-                head = head.next    # first different val
-                pre.next = head
+            if head.val == nextt.val:
+                duplicate_val = head.val
+                while nextt and nextt.val == duplicate_val:
+                    nextt = nextt.next
+                pre.next = nextt    # first different val
+                head = nextt
     
             else:
                 pre = pre.next
