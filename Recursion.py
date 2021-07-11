@@ -1,0 +1,81 @@
+"""
+Recursion
+Not what the question means to ask
+
+NO:     go through this random process once and see
+YES:    check if going through all possible processes can get
+
+"""
+# class Solution:
+#     def isScramble(self, s1: str, s2: str) -> bool:
+        
+#         def scramble(s):
+#             if len(s) == 1:
+#                 return s
+#             # split at random index
+#             rand_index = random.randint(1, len(s)-1)
+#             sub1 = s[:rand_index]
+#             sub2 = s[rand_index:]
+#             # randomly swap substrings or not
+#             if random.randint(0, 1):
+#                 return scramble(sub1) + scramble(sub2)
+#             else:
+#                 return scramble(sub2) + scramble(sub1)
+        
+#         return scramble(s1) == s2
+
+"""
+Recursion
+Need memorization, otherwise TLE
+
+Time O(n^4) subproblems * O(check) each subproblem
+Space O(n^4)
+
+"""
+# class Solution:
+#     def isScramble(self, s1: str, s2: str) -> bool:
+#         m = {}
+        
+#         def scramble(s1, s2, m):
+#             if (s1, s2) in m:
+#                 return m[(s1, s2)]
+
+#             if len(s1) == 1:
+#                 return s1 == s2
+            
+#             elif not sorted(s1) == sorted(s2):
+#                 return False
+
+#             for i in range(1, len(s1)):
+#                 if (scramble(s1[:i], s2[-i:], m) and scramble(s1[i:], s2[:-i], m)) or (scramble(s1[:i], s2[:i], m) and scramble(s1[i:], s2[i:], m)):
+#                     m[(s1, s2)] = True
+#                     return True
+                
+#             m[(s1, s2)] = False
+#             return False
+        
+#         return scramble(s1, s2, m)
+
+"""
+Or, simply add: @lru_cache(maxsize=None) 
+
+"""
+class Solution:
+    @lru_cache(maxsize=None)
+    
+    def isScramble(self, s1: str, s2: str) -> bool:
+        n, m = len(s1), len(s2)
+        
+        if n != m or sorted(s1) != sorted(s2):
+            return False
+        
+        if n < 4 or s1 == s2:
+            return True
+        
+        for i in range(1, n):
+            if (self.isScramble(s1[:i], s2[:i]) and self.isScramble(s1[i:], s2[i:])) or (self.isScramble(s1[:i], s2[-i:]) and self.isScramble(s1[i:], s2[:-i])):
+                return True
+            
+        return False
+
+
