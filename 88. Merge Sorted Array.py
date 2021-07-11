@@ -24,8 +24,8 @@ class Solution:
         i = 0
         j = 0
         
-        # m+j+1 is the length of nums1 plus num2 inserted into nums1
-        while i < m+j+1 and j < n:
+        # m + j is the length of nums1 plus num2 inserted into nums1
+        while i < m + j and j < n:
         
             if nums1[i] <= nums2[j]:
                 i += 1
