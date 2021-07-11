@@ -8,12 +8,18 @@ class Solution:
         """
         Dummy head and x_node for the new list
         
-        Initialize as:  
-                    dummy (smaller) -> x_node (bigger) -> None
-        Maintain order while insert:       
-                    dummy -> ... -> smaller -> x_node -> ... bigger -> None
-        Delete x_node in the end:
-                    dummy -> ... -> smaller -> x_node.next -> ... bigger -> None
+        0. Initialize as:  
+                dummy (smaller) -> x_node (bigger) -> None
+                    
+        1. Maintain order while insert:       
+                dummy -> ... -> smaller -> x_node -> ... bigger -> None
+                if cur.val < x:
+                    smaller.next = cur
+                else:
+                    bigger.next = cur
+                        
+        2. Delete x_node in the end:
+                dummy -> ... -> smaller -> x_node.next -> ... bigger -> None
         
         Time O(n)
         Space O(n)
@@ -29,7 +35,7 @@ class Solution:
         bigger = x_node
         
         # dummy -> ... -> smaller -> x_node -> ... bigger -> None
-        while head and head.next:
+        while head:
             nextt = head.next
             if head.val < x:
                 smaller.next = head
@@ -39,17 +45,7 @@ class Solution:
                 bigger.next = head
                 head.next = None
                 bigger = bigger.next
-                
             head = nextt
-            
-        # last one head.next = 0
-        if head.val < x:
-            smaller.next = head
-            head.next = x_node
-            smaller = smaller.next
-        else:
-            bigger.next = head
-            head.next = None
 
         # delete x_node
         smaller.next = x_node.next
