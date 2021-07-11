@@ -7,7 +7,7 @@ class Solution:
         
         Increment i if nums1[i] is smaller or equal
         Insert when nums2[j] is bigger
-        Before insert, shift nums1 from i+1 onwards back
+        Before insert, shift nums1 from i onwards back
         
         Time O(n)
         Space O(1)
@@ -46,3 +46,4 @@ class Solution:
                 
         if j < n:   # nums2 left
             nums1[-(n-j):] = nums2[j:]
+                
