@@ -18,7 +18,7 @@ class Solution:
                 self.res.add(tuple(path[:]))
             
             for j in range(i, n):
-                if i == 0 or path[-1] <= nums[j]:
+                if not path or path[-1] <= nums[j]:
                     dfs(j+1, path+[nums[j]])
         
         dfs(0, [])
