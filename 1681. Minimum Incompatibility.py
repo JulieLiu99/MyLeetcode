@@ -67,15 +67,17 @@ class Solution:
             dp[1<<i][i] = 0
 
         for mask in range(1<<n):
+            
             n_z_bits = [j for j in range(n) if mask&(1<<j)]
-            print(bin(mask), n_z_bits)
+            
             if len(n_z_bits) % groupsize == 1:
-                for j, l in permutations(n_z_bits, 2):
-                    # e.g. 0b111111 -> 0b111011 for l = 2
-                    dp[mask][l] = min(dp[mask][l], dp[mask^(1<<l)][j])
+                for i, j in permutations(n_z_bits, 2):
+                    # e.g. 0b111111 -> 0b111011 for j = 2
+                    dp[mask][j] = min(dp[mask][j], dp[mask^(1<<j)][i])
+                    
             else:
-                for j, l in combinations(n_z_bits, 2):
-                    if nums[j] != nums[l]:
-                        dp[mask][j] = min(dp[mask][j], dp[mask^(1<<j)][l] + nums[l] - nums[j])
+                for i, j in combinations(n_z_bits, 2):
+                    if nums[j] != nums[i]:
+                        dp[mask][j] = min(dp[mask][j], dp[mask^(1<<j)][i] + nums[j] - nums[i])
                         
         return min(dp[-1]) if min(dp[-1]) != float("inf") else -1
