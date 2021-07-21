@@ -6,34 +6,49 @@ class Solution:
         matrix[i][j][k]
         
         k: the triangle within each square cell. 
-        A square cell at (i, j) contains 4 triangles (top, right, down, left). 
+        A square cell at (i, j) contains 4 triangles (top, right, down, left).  
+        ---------
+        | \ 0 / | 
+        |3  X  1|
+        | / 2 \ |
+        ---------
+        
+        False means not traveled to from previous cells -> a new region
+        True means being cleared from previous cell visits
+        
+        At each triangle visit, check the cell content.
+        Mark all neighbour triangles that are cleared True.
+        Move on to neighbors it can travel to without barrier, without incrementing cnt.
+        
+        If end of unblocked visit, go back to for loop and cnt += 1.
         
         """
         
         def dfs(i, j, k):
             if 0 <= i < n > j >= 0 and not matrix[i][j][k]:
-                print(i, j, k, grid[i][j], "\tcnt", cnt)
-                if grid[i][j] == "*":
-                    if k <= 1:      # top right
-                        matrix[i][j][0] = matrix[i][j][1] = cnt
+
+                if grid[i][j] == "*": # \
+                    if k <= 1:      # top and right
+                        matrix[i][j][0] = matrix[i][j][1] = True
                         dfs(i - 1, j, 2)
                         dfs(i, j + 1, 3)
                     else:   
-                        matrix[i][j][2] = matrix[i][j][3] = cnt
+                        matrix[i][j][2] = matrix[i][j][3] = True
                         dfs(i + 1, j, 0)
                         dfs(i, j - 1, 1)
                         
                 elif grid[i][j] == "/":
-                    if 1 <= k <= 2: # bottom right
-                        matrix[i][j][1] = matrix[i][j][2] = cnt
+                    if 1 <= k <= 2: # bottom and right
+                        matrix[i][j][1] = matrix[i][j][2] = True
                         dfs(i, j + 1, 3)
                         dfs(i + 1, j, 0)
                     else:
-                        matrix[i][j][0] = matrix[i][j][3] = cnt
+                        matrix[i][j][0] = matrix[i][j][3] = True
                         dfs(i - 1, j, 2)
                         dfs(i, j - 1, 1)
-                else:
-                    matrix[i][j][0] = matrix[i][j][1] = matrix[i][j][2] = matrix[i][j][3] = cnt
+                        
+                else: # not slash
+                    matrix[i][j][0] = matrix[i][j][1] = matrix[i][j][2] = matrix[i][j][3] = True
                     dfs(i - 1, j, 2)
                     dfs(i, j + 1, 3)
                     dfs(i + 1, j, 0)
@@ -45,7 +60,7 @@ class Solution:
         n = len(grid)
         
         # Make matrix array marking [top, right, down, left] of each square to zero.
-        matrix = [[[0, 0, 0, 0] for j in range(n)] for i in range(n)]
+        matrix = [[[False, False, False, False] for j in range(n)] for i in range(n)]
         cnt = 0
         
         for i in range(n):
@@ -57,5 +72,4 @@ class Solution:
                         cnt += 1
                         dfs(i, j, k)
                     
-        print(matrix)
         return cnt
