@@ -14,7 +14,7 @@ class Solution:
         Space O(MaxWidth of Tree)
         
         """
-    
+        
         if not root: return []
         
         queue = collections.deque([root])
@@ -23,8 +23,8 @@ class Solution:
         while queue:
 
             cur_level = []
-            
-            for i in range(len(queue)): # loop through width of previous level
+            width = len(queue) # width of previous level
+            for i in range(width): 
                 node = queue.popleft()
                 if node.left:
                     queue.append(node.left)
@@ -35,3 +35,5 @@ class Solution:
             res.append(cur_level)
             
         return res
+
+
