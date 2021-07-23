@@ -27,20 +27,20 @@ class Solution:
         for a, b in edges:
             graph[a].add(b)
             graph[b].add(a)
-        
+
         # Find the parent of each node
         parent_graph = collections.defaultdict(int)
-        q = [(0, -1)]
-        while q:
+        level = [(0, -1)]
+        while level:
             next_level = []
-            for node, parent in q:
+            for node, parent in level:
                 parent_graph[node] = parent
-                for neigh in graph[node]:
-                    if neigh != parent:
-                        next_level.append((neigh, node))
-            q = next_level
-            
-        @functools.lru_cache(None)
+                for neighbor in graph[node]:    # connecting nodes that aren't parent
+                    if neighbor != parent:      # = neighbors of a lower level
+                        next_level.append((neighbor, node))
+            level = next_level
+
+        @lru_cache(None)
         def find_ancestor(node, node_value):
             '''Returns the closest ancestor with a GCD of 1 if one exists.  Otherwise return -1.'''
             if node == -1:
