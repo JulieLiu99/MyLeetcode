@@ -34,7 +34,7 @@ class Solution:
             
         # slow is mid, or start of second half
         mid = TreeNode(slow.val)
-        prev.next = None
+        prev.next = None  # break the linked list before mid
         mid.left = self.sortedListToBST(dummy.next) # can't use head!!! will never be None!!! mid can be head!!!
         mid.right = self.sortedListToBST(slow.next)
         
