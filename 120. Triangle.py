@@ -38,8 +38,9 @@ class Solution:
         """
 
         rows = len(triangle)
-        res = [0] * (rows + 1)
-        for row in range(rows-1, -1, -1):
+        res = triangle[-1][:]
+        
+        for row in range(rows-2, -1, -1):   # from second last row
             for i in range(len(triangle[row])):
                 # update res, by adding triangle[row][i] and the smaller path from previous rows
                 res[i] = triangle[row][i] + min(res[i], res[i + 1])
