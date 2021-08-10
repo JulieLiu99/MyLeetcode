@@ -1,5 +1,6 @@
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        
         """
         Binary search 
         because the overall run time complexity should be O(log (m+n))
@@ -22,19 +23,19 @@ class Solution:
         if n1 > n2:
             nums1, nums2, n1, n2 = nums2, nums1, n2, n1
 
-        l, r = 0, n1
+        l, r = -1, n1
         half_len = (n1 + n2 + 1) // 2
         
-        while l < r:
+        while l + 1 != r:
             m1 = (l + r) // 2       # middle point in nums1
             m2 = half_len - m1      # middle point in nums2
             if nums1[m1] < nums2[m2-1]: 
-                l = m1 + 1              # m1 too small, increase it
+                l = m1              # m1 too small, increase it
             else:                       
-                r = m1                  # m1 too big, decrease it
+                r = m1              # m1 too big, decrease it
                 
-        m1 = l
-        m2 = half_len - l
+        m1 = r
+        m2 = half_len - r
 
         if m1 == 0: 
             max_of_left = nums2[m2-1]
