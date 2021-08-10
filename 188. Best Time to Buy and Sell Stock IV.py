@@ -18,7 +18,9 @@ class Solution:
         for _ in range(k):
             buy = prices[0] - profits[0]
             for i in range(1, n):
-                buy = min(buy, prices[i] - profits[i])          # hold or buy
-                profits[i] = max(profits[i-1], prices[i] - buy) # hold or sell
+                # profit_now = price_now - price_bought + profit_prev
+                #            = price_now - (price_bought - profit_prev)
+                buy = min(buy, prices[i] - profits[i])          # hold the prev stock or buy the stock today instead
+                profits[i] = max(profits[i-1], prices[i] - buy) # hold the current stock or sell the stock today
             
         return profits[-1]
