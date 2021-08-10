@@ -32,6 +32,8 @@ class Solution:
         """
         Iterative
         
+        Hard to use one stack because root needs to be popped after its two subtrees,
+        But it needs to be popped first before we know who its left and right children are.
         Use two stacks:
         
         In stack1:  append left -> right 
@@ -63,3 +65,4 @@ class Solution:
 #             res.append(stack2.pop().val)
             
 #         return res
+                
