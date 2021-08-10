@@ -16,18 +16,18 @@ class Solution:
         Space O(height)
         
         """
-#         self.res = []
+        self.res = []
         
-#         def postorder(root):
-#             if not root: 
-#                 return
+        def postorder(root):
+            if not root: 
+                return
     
-#             postorder(root.left)
-#             postorder(root.right)
-#             self.res.append(root.val)
+            postorder(root.left)
+            postorder(root.right)
+            self.res.append(root.val)
             
-#         postorder(root)
-#         return self.res
+        postorder(root)
+        return self.res
 
         """
         Iterative
@@ -44,22 +44,22 @@ class Solution:
         Space O(n)
         
         """
-        if not root: return []
+#         if not root: return []
         
-        stack1 = [root]
-        stack2 = []
-        res = []
+#         stack1 = [root]
+#         stack2 = []
+#         res = []
         
-        while stack1:
-            node = stack1.pop()
-            stack2.append(node)
+#         while stack1:
+#             node = stack1.pop()
+#             stack2.append(node)
             
-            if node.left: 
-                stack1.append(node.left)
-            if node.right: 
-                stack1.append(node.right)
+#             if node.left: 
+#                 stack1.append(node.left)
+#             if node.right: 
+#                 stack1.append(node.right)
         
-        while stack2:
-            res.append(stack2.pop().val)
+#         while stack2:
+#             res.append(stack2.pop().val)
             
-        return res
+#         return res
