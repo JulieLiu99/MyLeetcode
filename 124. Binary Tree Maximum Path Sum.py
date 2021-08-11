@@ -12,8 +12,7 @@ class Solution:
         If sum of subtree is negative -> discard it
         
         Very important: when return to one level up, we can only keep ONE side of subtree,
-        Because the input is given in level-order, root of left subtree and root of right subtree are adjacent!
-        But they don't share a common edge!!!
+        If parent of root and root are included, root.left and root.right can't be both in the sequence/path.
         
         Time O(n)
         Space O(height)
