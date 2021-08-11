@@ -15,7 +15,6 @@ class Solution:
         for c in s:
             if c.isalnum(): 
                 new_s += c.lower()
-        print(new_s)
         
         l = 0
         r = len(new_s) - 1
