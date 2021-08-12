@@ -65,20 +65,19 @@ class Solution:
                 size += 1
             return size
         
-        def split(head, group_size):
-            tail = head
+        def split(head, group_size):    # return head for next group of nodes
             for _ in range(group_size-1):
-                if not tail:
+                if not head:
                     return None
-                tail = tail.next
+                head = head.next
                 
-            if not tail: return None
-            next_head = tail.next
-            tail.next = None
+            if not head: return None
+            next_head = head.next
+            head.next = None
             
             return next_head
         
-        def merge(h1, h2, tail):
+        def merge(h1, h2, tail):    # return tail for the current merged h1+h2
             while h1 and h2:
                 if h1.val <= h2.val:
                     tail.next = h1
@@ -99,12 +98,14 @@ class Solution:
         
         while group_size < size:
             tail = dummy
-            cur = dummy.next
-            while cur:
-                h1 = cur
+            while head:
+                h1 = head
                 h2 = split(h1, group_size)
-                cur = split(h2, group_size)
-                tail = merge(h1, h2, tail)
+                head = split(h2, group_size)    # head of next round of h1, h2
+                tail = merge(h1, h2, tail)      # tail of this round of h1, h2
+                                                # we need to keep track of tail because 
+                                                # we want to connect merged h1+h2 to the sorted list
             group_size *= 2   # one level up
-        
+            head = dummy.next # reinitialize head to the front
+            
         return dummy.next
