@@ -19,20 +19,20 @@ class Solution:
         dummy = prev = ListNode()
         dummy.next = head
         
-        nextt = head.next
+        target = head.next
         head.next = None # end of sorted list!!! -> otherwise cycle in the returned list
-        while nextt:
-            # find insertion place for nextt, before head.val > nextt.val
-            while head and head.val <= nextt.val:
+        while target:
+            # find insertion place for target, before head.val > target.val
+            while head and head.val <= target.val:
                 prev = head
                 head = head.next
         
-            next_target = nextt.next
+            next_target = target.next
             # insert
-            prev.next = nextt
-            nextt.next = head
+            prev.next = target
+            target.next = head
             # next target
-            nextt = next_target
+            target = next_target
             # reinitialize prev and head
             prev = dummy
             head = dummy.next
