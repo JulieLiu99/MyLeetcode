@@ -27,20 +27,20 @@ class Solution:
         neighbors = collections.defaultdict(list)
         wordList.append(beginWord)
         for word in wordList:
-            for j in range(len(word)):
-                pattern = word[:j] + "*" + word[j+1:]
+            for i in range(len(word)):
+                pattern = word[:i] + "*" + word[i+1:]
                 neighbors[pattern].append(word)
                        
         visited = set([beginWord])
         q = deque([beginWord])
         res = 1
         while q:
-            for i in range(len(q)):
+            for _ in range(len(q)):
                 word = q.popleft()
                 if word == endWord: # we've reached endWord
                     return res      # -> return number of layers
-                for j in range(len(word)):
-                    pattern = word[:j] + "*" + word[j+1:]
+                for i in range(len(word)):
+                    pattern = word[:i] + "*" + word[i+1:]
                     for neighbor in neighbors[pattern]:
                         if neighbor not in visited:
                             visited.add(neighbor)
