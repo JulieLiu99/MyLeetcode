@@ -2,7 +2,7 @@ class Solution:
     def partition(self, s: str) -> List[List[str]]:
         
         """
-        DFS
+        Backtracking, Recursion DFS
         
         Time O(n*2^n): A string with n letters has n-1 gaps. Each gap can be chosen or not chose. e.g. aaaaaa
         Space O(n)
