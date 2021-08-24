@@ -6,15 +6,13 @@ def get_shortest_unique_substring(arr, str):
             return False
     return True
   
-  l = 0
-  r = 1
+  l = r = 0
   res = ""
   size = len(str)
-  while l < r < len(str):
-    cur = str[l:r]
+  while l <= r < len(str):
+    cur = str[l:r+1]
     if allIn(cur):
-        print(cur)
-        if len(cur) <= size:  # has to have =
+        if len(cur) <= size:  # has to have =, because we might need to return entire str
             res = cur
             size = len(cur)
         l += 1
@@ -42,4 +40,4 @@ def get_shortest_unique_substring(arr, str):
   
   """
 
-  get_shortest_unique_substring(["A"], "A")
+print(get_shortest_unique_substring(["A"], "A"))
