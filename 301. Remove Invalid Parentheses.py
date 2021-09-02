@@ -17,7 +17,6 @@ class Solution:
         # set is used here in order to avoid duplicate element
         level = {s}
         while True:
-            print(level)
             valid = []
             for elem in level:
                 if self.isValid(elem):
@@ -38,7 +37,6 @@ class Solution:
             # {'()()()', '()))()', ')())()', '(())()', '()())(', '()()))'}
             for elem in level:
                 for i in range(len(elem)):
-                    print(i, elem[:i], elem[i + 1:] )
                     new_level.add(elem[:i] + elem[i + 1:])
             level = new_level
     
