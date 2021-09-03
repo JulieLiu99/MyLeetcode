@@ -1,91 +1,69 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        
         """
-        Prefix and Postfix products
+        answer[i] = product of all the elements of nums except nums[i]
         
-        3 traversals of nums
+        prefix product
+        prefix[i] = nums[0] * ... * nums[i-1]
         
-        answer[i] = nums[0] ... nums[i-1] * nums[i+1] ... nums[n-1]
-        pre[i] = nums[0] ... nums[i-1] (pre[1] = nums[0])
-        post[i] = nums[i+1] ... nums[n-1] (pre[-2] = nums[n-1], pre[0] = nums[1]...nums[n-1])
-         
-        Time O(n)
-        Space O(n)
+        res[i] = prefix[i] * prefix[n] // prefix[i+1]
+        !!!! MIGHT BE // 0
         
-        Correct but TLE :(
-         
-        """
-#         n = len(nums)
-#         answer = []
-#         pre = [1]
-#         post = [1]
+        suffix product also
+        suffix[i+1] = nums[i+1] * ... * nums[n-1]
         
-#         for i, num in enumerate(nums):
-#             pre.append(pre[i] * num)
-
-#         for j in range(n-1, 0, -1): # till 0 instead of 1
-#             post = [post[0] * nums[j]] + post
-
-#         for k, num in enumerate(nums):
-#             answer.append(pre[k] * post[k])
-        
-#         return answer
-        
-        """
-        
-        Reduce 3 traversal to 2
-        
-        Combine answer calcualtion and postfix products
-        Go front to back once -> prefix products
-        Go back to front once -> calculate answer and update postfix product
+        res[i] = prefix[i] * suffix[i+1]
         
         Time O(n)
         Space O(n)
         
-        Correct but still TLE :(
-        
         """
 #         n = len(nums)
-#         answer = [0 for _ in range(n)]
-#         pre = [1]
-#         post = [1]
         
-#         # pre[i] = nums[0] ... nums[i-1] (pre[1] = nums[0])
-#         for i, num in enumerate(nums):
-#             pre.append(pre[i] * num)
+#         prefix = [1] # prefix[1] = nums[0]
+#         for i in range(n):
+#             prefix.append(prefix[-1] * nums[i])
+            
+#         suffix = [1] # suffix[1] = nums[n-1]
+#         for i in range(n-1, -1, -1):
+#             suffix.append(suffix[-1] * nums[i])
         
-#         # post[i] = nums[i+1] ... nums[n-1] (pre[-2] = nums[n-1], pre[0] = nums[1]...nums[n-1])
-#         for j in range(n-1, -1, -1): 
-#             answer[j] = pre[j] * post[0]
-#             post = [post[0] * nums[j]] + post
+#         """
+#         suffix[:] = suffix[::-1] # suffix[n-1] = nums[n-1]
         
-#         return answer
+#         res = []
+#         for i in range(n):
+#             res.append(prefix[i] * suffix[i+1])
+#         """
+#         # without reverse
+        
+#         res = []
+#         for i in range(n):
+#             res.append(prefix[i] * suffix[n-i-1])
+            
+#        return res
+    
+        """
+        Running Product
+        
+        Time O(n): two loops through nums, combine suffix with getting res
+        Space O(1): instead of arrays, use running product variables 
         
         """
-        Record prefix and postfix products in-place in answer[]
         
-        Go front to back once -> prefix products
-        Go back to front once -> calculate answer and update postfix product
+        res = [1] * len(nums)
         
-        Time O(n)
-        Space O(1)
-        
-        """
-        n = len(nums)
-        product = 1
-        answer = [1]
-        
-        # answer[i] = nums[0] ... nums[i-1] 
-        # answer[1] = nums[0]
-        # answer[n-1] = nums[0]...nums[n-2]
-        for i in range(0, n-1):
-            product *= nums[i]
-            answer.append(product)
+        prefix = 1
+        for i in range(len(nums)): # get prefix products
+            res[i] = prefix * nums[i]
+            prefix *= nums[i]
+
+        suffix = 1 # get suffix products, then prefix product * suffix product 
+        for i in range(len(nums)-1, -1,-1):
+            if i == 0:
+                res[i] = suffix
+                break
+            res[i] = res[i-1] * suffix # prefix product * suffix product
+            suffix = suffix * nums[i]
             
-        product = 1
-        for i in range(n-1, -1, -1):
-            answer[i] *= product
-            product *= nums[i]
-            
-        return answer
+        return res
