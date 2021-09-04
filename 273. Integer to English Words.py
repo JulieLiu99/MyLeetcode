@@ -35,13 +35,17 @@ class Solution:
             if num == 0: 
                 return ""
             
+            # For 0< nums <= 99:
+            # if at start, one extra space -> handled at the end
+            # if in middle, serve as space between this part and prev part -> any positive num will come here, so makes sense to add space here
+            
             if num <= 19: 
-                return " " + to19[num-1]
+                return " " + to19[num-1]    
             
             # 99 = tens[99//10] + to19[99%10] = Ninety Nine 
             # 20 = tens[20//10] = Twenty
             if num <= 99: 
-                return " " + tens[num//10] + recursor(num%10)
+                return " " + tens[num//10] + recursor(num%10) 
             
             # 100 = recursor(1) + " Hundred "+ recursor(0)
             # 101 = recursor(1) + " Hundred "+ recursor(1)
