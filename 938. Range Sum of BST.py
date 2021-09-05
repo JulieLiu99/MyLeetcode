@@ -24,10 +24,10 @@ class Solution:
             if low <= node.val <= high:
                 self.res += node.val
                 
-            if node.left and node.val > low:
+            if node.val > low and node.left:
                 preorder(node.left)
                 
-            if node.right and node.val < high:
+            if node.val < high and node.right:
                 preorder(node.right)
             
             return
