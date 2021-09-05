@@ -20,18 +20,21 @@ class Solution:
         self.res = 0
 
         def preorder(node: Optional[TreeNode]):
-            if not node: return
             
             if low <= node.val <= high:
                 self.res += node.val
                 
-            if node.val > low:
+            if node.left and node.val > low:
                 preorder(node.left)
                 
-            if node.val < high:
+            if node.right and node.val < high:
                 preorder(node.right)
             
             return
-
-        preorder(root)
+        
+        if root:
+            preorder(root)
+        else:
+            return 0
+        
         return self.res
