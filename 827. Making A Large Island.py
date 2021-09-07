@@ -20,8 +20,8 @@ class Solution:
                 seen.add((i, j))
                 area[color] += 1
 
-                for x, y in [(i+1,j),(i-1,j),(i,j+1),(i,j-1)]:
-                    if 0<=x<m and 0<=y<n and grid[x][y] != 0:
+                for x, y in [(i+1,j), (i-1,j), (i,j+1), (i,j-1)]:
+                    if 0 <= x < m and 0 <= y < n and grid[x][y] != 0:
                         if (x, y) not in seen:
                             dfs(x, y, color)
 
@@ -54,8 +54,8 @@ class Solution:
             for j in range(n):
                 if grid[i][j] == 0:
                     unique_land_id = set()
-                    for x, y in [(i+1,j),(i-1,j),(i,j+1),(i,j-1)]:
-                        if 0<=x<m and 0<=y<n and grid[x][y] != 0:
+                    for x, y in [(i+1,j), (i-1,j), (i,j+1), (i,j-1)]:
+                        if 0 <= x < m and 0 <= y < n and grid[x][y] != 0:
                             unique_land_id.add(grid[x][y])
                     # current 0 converted to 1
                     cur_area = 1
