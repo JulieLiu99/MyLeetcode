@@ -1,50 +1,38 @@
-"""
-Get the probability range for each index idx_prob[]
-
-Pick a random float [0, 1) in pickIndex()
-Binary search through idx_prob[]
-
-pickIndex():
-Time O(logn)
-Space O(n)
-
-Pretty good performance already
-
-Could reduce Space to O(1) by modifying w in place
-    for i in range(1,self.n):
-        w[i] += w[i-1]
-        
-"""
-
 class Solution:
+    """
+    convert weights in to array of running sums 
+    [1, 3]
+    [1, 4]: [1, 2-3-4]
+    return the index where [1, self.prefixSums[-1]) fall into
+    e.g. for random value = 2/3/4, return 1
+    
+    Time O(n) for Solution(w)
+    Time O(logn) for pickIndex
+    Space O(n)
+    
+    """
 
     def __init__(self, w: List[int]):
-        self.idx_prob = []   # [probability range] for each index
-        self.n = len(w)
-        total = sum(w)
-        start = 0
-        for idx, prob in enumerate(w):
-            self.idx_prob.append(start)
-            start += prob/total
-        
+        self.prefixSums = []
+        total = 0
+        for weight in w:
+            total += weight
+            self.prefixSums.append(total)
+
     def pickIndex(self) -> int:
-        # pick a random float [0, 1)
-        # binary search through idx_prob
-        if self.n == 1: return 0
-        rand = random.random()
+        value = random.randrange(1, self.prefixSums[-1]+1)
+        # return bisect.bisect_left(self.prefixSums, value)
         l = -1
-        r = self.n
-        while l+1 != r:
-            mid = l + (r-l)//2
-            if self.idx_prob[mid] <= rand and (mid==self.n-1 or (mid+1<self.n and rand < self.idx_prob[mid+1])):
-                return mid
-            elif self.idx_prob[mid] < rand:
-                l = mid
+        r = len(self.prefixSums) 
+        while l + 1 != r:
+            m = l + (r-l)//2
+            if self.prefixSums[m] == value :
+                return m
+            elif self.prefixSums[m] > value:
+                r = m
             else:
-                r = mid
-        return l
-    
-        
+                l = m
+        return r   # because self.prefixSums[l] is strictly smaller than value
 
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(w)

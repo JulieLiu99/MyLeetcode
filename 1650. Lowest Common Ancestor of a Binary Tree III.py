@@ -60,7 +60,7 @@ class Solution:
 #         q_depth = get_depth(q)
 
 #         if q_depth > p_depth:
-#             p, q = q,p
+#             p, q = q, p
 
 #         diff_of_heights = abs(p_depth - q_depth)
 #         for _ in range(diff_of_heights):

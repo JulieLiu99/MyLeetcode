@@ -56,7 +56,7 @@ class Solution:
             # 1000 = recursor(1) + " Thousand "+ recursor(0)
             # 1001 = recursor(1) + " Thousand "+ recursor(1)
             # 9999 = recursor(9) + " Thousand "+ recursor(1)
-            # max= 999 thousands + 9 hundred 99
+            # max= 99 thousands + 9 hundred 99
             if num <= 10**6-1: 
                 return recursor(num//1000) + " Thousand"+ recursor(num%1000)
 

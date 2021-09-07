@@ -8,7 +8,7 @@ class Solution:
         If one str comes to an end, 
         Only add digit from  the other string, and carry
         
-        In the end, if there carry, add last 1
+        In the end, if there is carry, add last 1
         
         Time O(n)
         Space O(1)
