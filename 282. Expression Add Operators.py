@@ -26,15 +26,15 @@ class Solution:
                     if num[i] == '0' and j != i:
                         # For example "0555", Only consider "0" as possible operand
                         break
-                    s = num[i : j + 1]
-                    v = int(s)
+                    operand = num[i : j + 1]
+                    v = int(operand)
                     if i == 0:
                         # no possible left operand
-                        dfs(j + 1, s, v, v)
+                        dfs(j + 1, operand, v, v)
                     else:
-                        dfs(j + 1, path + '+' + s, val + v, v)
-                        dfs(j + 1, path + '-' + s, val - v, -v)
-                        dfs(j + 1, path + '*' + s, val - last_addition + last_addition * v, last_addition * v)
+                        dfs(j + 1, path + '+' + operand, val + v, v)
+                        dfs(j + 1, path + '-' + operand, val - v, -v)
+                        dfs(j + 1, path + '*' + operand, val - last_addition + last_addition * v, last_addition * v)
         
         dfs(0, '', 0, 0)
         return res
