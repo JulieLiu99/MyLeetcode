@@ -37,8 +37,8 @@ class Solution:
         Linked List Cycle + Floyd Algorithm
         
         Linked List Cycle:
-        Each num value points to an index (nums[0] = 5 -> nums[5]), and links to the num at that index
-        Duplicate index and nums[index] gets pointed to twice -> start of a cycle
+        num = idx -> nums[idx] -> nums[nums[idx]]
+        Duplicate nums[index] gets pointed to twice -> start of a cycle
         0 is never pointed at (1 <= nums[i] <= n), nums[0] is start
         
         Floyd Algorithm
@@ -48,7 +48,7 @@ class Solution:
         P is length from start 0 to duplicate 1, 
         and X is distance from first meeting point of slow and fast
         2 * (P + C - X) = P + C + C - X
-                     P = X
+                      P = X
           P
         0 -> 1 -> 2 -> 3
               ^        |
