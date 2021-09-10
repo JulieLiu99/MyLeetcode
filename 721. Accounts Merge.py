@@ -3,7 +3,7 @@ class Solution:
         """
         DFS 
         
-        Time O(n) 
+        Time O(n log n): for final sorting, other parts O(n)
         Space O(n)
         
         """
