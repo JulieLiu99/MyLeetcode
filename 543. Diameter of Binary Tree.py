@@ -35,11 +35,11 @@ class Solution:
             if root.right:
                 right = dfs(root.right)
 
-            # update res: diameter = leftmost child -> current root -> rightmost child
+            # update res: diameter = max left depth + max right depth
             self.res = max(self.res, left + right) 
 
-            # max depth below this root
-            # from either left/right child to this root (1) + max(depth below left/right child)
+            # max depth of this root: serves as child depth for its parent
+            # from this root to its parent node(1) + max depth of this root
             return 1 + max(left, right) 
         
         dfs(root)
