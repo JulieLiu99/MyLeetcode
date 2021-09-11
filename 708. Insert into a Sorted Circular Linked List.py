@@ -27,8 +27,8 @@ class Solution:
             
             # coming to the end -> insert at the end
             if curr.next == head: 
-                node.next = curr.next 
                 curr.next = node 
+                node.next = head
                 return head
             
             # found place in middle of ascending nodes, or
