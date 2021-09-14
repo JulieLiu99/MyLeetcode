@@ -56,10 +56,10 @@ class Solution:
                     val = ""
                     
             elif ch == ")": 
-                if val: 
+                if val:  # new node 
                     node = TreeNode(int(val))
                     val = ""
-                else: 
+                else:    # previous subtree of nodes
                     node = stack.pop()
                     
                 if stack[-1].left is None: 
