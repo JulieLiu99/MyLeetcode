@@ -23,14 +23,14 @@ class Solution:
                 i += 1
                 j += 1
             elif abbr[j].isdigit():
-                if abbr[j] == "0": return False
+                if abbr[j] == "0": return False  # number can't start with 0
                 x = int(abbr[j])
                 while j + 1 < len(abbr) and abbr[j+1].isdigit(): 
                     j += 1
                     x = x * 10 + int(abbr[j])
                 j += 1
                 i += x
-                if i > len(word): return False
+                if i > len(word): return False   # x is too large, not enough word characters
             else:
                 return False
 
