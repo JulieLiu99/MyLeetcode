@@ -17,6 +17,7 @@ class Solution:
         A has max count 3 -> serve as block leader
         [ABC][ABD][ABE][F]
         In this case all tasks can be processed without idle time
+        The additional tasks after (max_count - 1) blocks will forms block on their own
         
         Time O(n)
         Space O(n)
