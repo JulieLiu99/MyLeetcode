@@ -37,11 +37,10 @@ class Solution:
         
         """
 
-#         def next_index(curr_index, duration): # calculate next index based on current index and duration
+#         def next_index(curr_index, duration): # calculate next day's index
 #             j = curr_index
 #             while j < len(days) and days[j] < days[curr_index] + duration:
 #                 j += 1
-
 #             return j
         
 #         @lru_cache(None)
@@ -76,8 +75,8 @@ class Solution:
         
         """
         s = set(days)
-        durations = [1,7,30]
-        dp = [0] * (days[-1] + 1)
+        durations = [1, 7, 30]
+        dp = [0] + [0] * days[-1]
         
         for i in range(1, len(dp)):
             
@@ -85,6 +84,6 @@ class Solution:
                 dp[i] = dp[i - 1]
 
             else:
-                dp[i] = min([dp[(i - d) if i - d >= 0 else 0] + cost for d, cost in zip(durations, costs)])
+                dp[i] = min([dp[(i - duration) if i - duration >= 0 else 0] + cost for duration, cost in zip(durations, costs)])
                 
         return dp[-1]
