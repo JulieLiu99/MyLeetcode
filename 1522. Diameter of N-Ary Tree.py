@@ -54,6 +54,12 @@ class Solution:
         """
         Get 2 longest depths of children, withouth sorting [depths of children]
         
+        Keep top 2 longest depths: max_depth1, max_depth2
+        
+        max_depth1 is largest, so try to update it first
+        Whenever we update max_depth1, update max_depth2 also to the old value of max_depth1 (the now 2nd max value) 
+        -> to avoid only updating max_depth1 if depths is an ascending stream
+        
         Time O(n)
         Space O(n)
         
