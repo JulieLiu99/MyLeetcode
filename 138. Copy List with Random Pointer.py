@@ -25,14 +25,13 @@ class Solution:
             return 
         
         copied = {}
-        node = head
         
+        node = head
         while node != None: # make copy and store in to hashmap
             copied[node] = Node(node.val)
             node = node.next
         
-        for node in copied: # assign pointers for the copied nodes
-            copy = copied[node]
+        for node, copy in copied.items(): # assign pointers for the copied nodes
             if node.next:
                 copy.next = copied[node.next]
             if node.random:
@@ -59,14 +58,12 @@ class Solution:
 
 #             if node.random: 
 #                 if node.random not in copied: 
-#                     newnode = Node(node.random.val)  # create a copy of node.random
-#                     copied[node.random] = newnode    # store to hashmap
+#                     copied[node.random] = Node(node.random.val)    # create a copy of node.random
 #                 copy.random = copied[node.random]    # point from copy of node to copy of node.random
 
 #             if node.next:
 #                 if node.next not in copied:          
-#                     newnode = Node(node.next.val)    # create a copy of node.next
-#                     copied[node.next] = newnode      # store to hashmap
+#                     copied[node.next] = Node(node.next.val)        # create a copy of node.next
 #                 copy.next = copied[node.next]        # point from copy of node to copy of node.next
 
 #             node = node.next
