@@ -11,19 +11,19 @@ class Solution:
         Has to use DP
         where dp[num] = length of subsequence seen so far (that ends with num)
         
+        For each new number in array, check if it can be appended to an existing subsequence
+        If yes, dp[num] = dp[last num of existing subsequence] + 1
+        If no, start a new subsequence dp[num] = 1
         
         Time O(n)
         Space O(n)
         
         """
-        sub_length = {}
-        res = float('-inf')
+        dp = {}
         for num in arr:
-            if num - difference in sub_length: # (num - difference) is last num in subsequnce
-                sub_length[num] = sub_length[num - difference] + 1
+            if num - difference in dp: # (num - difference) is last num in subsequnce
+                dp[num] = dp[num - difference] + 1
             else:
-                sub_length[num] = 1
+                dp[num] = 1
 
-            res = max(res, sub_length[num])
-
-        return res
+        return max(dp.values())
