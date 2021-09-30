@@ -12,12 +12,12 @@ class MovingAverage:
 
     def __init__(self, size: int):
         self.length = 0
-        self.max = size
+        self.size = size
         self.sum = 0
         self.queue = deque()
 
     def next(self, val: int) -> float:
-        if self.length < self.max:
+        if self.length < self.size:
             self.length +=1
             self.queue.append(val)
             self.sum += val
