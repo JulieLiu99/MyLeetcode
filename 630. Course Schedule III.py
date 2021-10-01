@@ -1,6 +1,5 @@
 class Solution:
     def scheduleCourse(self, courses: List[List[int]]) -> int:
-        
         """
         Priority Queue
         
@@ -26,6 +25,6 @@ class Solution:
             cur_day += duration
             
             if cur_day > lastday:   # cannot meet lastday for this course
-                cur_day += heappop(pq)
+                cur_day -= (-heappop(pq))
                 
         return len(pq)
