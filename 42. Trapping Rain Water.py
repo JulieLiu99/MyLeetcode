@@ -73,23 +73,55 @@ class Solution:
         Space O(1)
 
         """
-        n = len(height) 
-        if n == 0: return 0
+#         n = len(height) 
+#         if n == 0: return 0
         
-        l = 0
-        r = n - 1
-        max_l = height[l]
-        max_r = height[r]
-        ans = 0
+#         l = 0
+#         r = n - 1
+#         max_l = height[l]
+#         max_r = height[r]
+#         ans = 0
 
-        while l < r:
-            if max_l < max_r:
-                ans += max_l - height[l]
-                l += 1
-                max_l = max(max_l, height[l])
-            else:
-                ans += max_r - height[r]
-                r -= 1
-                max_r = max(max_r, height[r])
+#         while l < r:
+#             if max_l < max_r:
+#                 ans += max_l - height[l]
+#                 l += 1
+#                 max_l = max(max_l, height[l])
+#             else:
+#                 ans += max_r - height[r]
+#                 r -= 1
+#                 max_r = max(max_r, height[r])
 
-        return ans
+#         return ans
+
+        """
+        Easier to understand
+        
+        First pass find peak
+        Approach peak from two sides, and collect water
+        
+        Time O(n)
+        Space O(1)
+        
+        """
+
+        res = 0
+        peak = 0
+        last_peak_index = 0
+        
+        for i, h in enumerate(height):
+            if h >= peak:
+                peak = h
+                last_peak_index = i
+        
+        left_max = 0
+        for i in range(0, last_peak_index):
+            left_max = max(left_max, height[i])
+            res += left_max - height[i]
+        
+        right_max = 0
+        for j in range(len(height)-1, last_peak_index, -1):
+            right_max = max(right_max, height[j])
+            res += right_max - height[j]
+        
+        return res
