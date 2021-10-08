@@ -15,7 +15,6 @@ class Solution:
         
         """
         adj = {c: set() for w in words for c in w}
-        
         # build adjacency graph
         for i in range(len(words)-1):
             w1, w2 = words[i], words[i+1]
@@ -26,24 +25,24 @@ class Solution:
                 if w1[j] != w2[j]:  # w1[j] < w2[j] in our dictionary
                     adj[w1[j]].add(w2[j]) # put first different char into adj graph
                     break
-                    
-        visited = {} # True = visited, False = in current path, shouldn't be pointed back
+
+        visited = {} # False = visited, True = in current path, shouldn't be pointed back
         res = []
-        def dfs(c):
+        def dfs_cycle(c):
             if c in visited:
                 return visited[c] # if in current path already -> cycle -> False
-            
-            visited[c] = False   # include it into current path, shouldn't be pointed back
+
+            visited[c] = True   # include it into current path, shouldn't be pointed back
             for nextt in adj[c]:
-                if not dfs(nextt):  # cycle back to anywhere from c till nextt
-                    return False
-            visited[c] = True
+                if dfs_cycle(nextt):  # cycle back to anywhere from c till nextt
+                    return True
+            visited[c] = False
             res.append(c)
-            return True
-            
+            return False
+
         for c in adj:
-            if not dfs(c):
+            if dfs_cycle(c):
                 return ""
-            
+
         res.reverse()
-        return "".join(res)  
+        return "".join(res) 

@@ -23,10 +23,29 @@ class Solution:
         Space O(n)
         """
         
+#         heap = []
+#         for point in points:
+#             heapq.heappush(heap, (point[0]**2 + point[1]**2, point))
+                           
+#         res = []
+#         for _ in range(k):
+#             point = heapq.heappop(heap)[1] 
+#             res.append(point)
+          
+#         return res
+            
+        """
+        Heapify takes O(n) time
+        
+        Time: O(n + klogn)
+        
+        """
         heap = []
         for point in points:
-            heapq.heappush(heap, (point[0]**2 + point[1]**2, point))
-                           
+            heap.append((point[0]**2 + point[1]**2, point))
+            
+        heapq.heapify(heap)
+        
         res = []
         for _ in range(k):
             point = heapq.heappop(heap)[1] 
