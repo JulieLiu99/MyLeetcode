@@ -7,7 +7,7 @@
 class Solution:
     def closestValue(self, root: Optional[TreeNode], target: float) -> int:
         """
-        Traversal of tree
+        Preorder traversal of tree
         If node.val < target: go right
         If node.val > target: go left
         
@@ -22,14 +22,14 @@ class Solution:
         
         closest = root.val
                 
-        while(root):
+        while root:
             
-            if (abs(target-root.val) < abs(target-closest)):
+            if abs(target-root.val) < abs(target-closest):
                 closest = root.val
 
-            if target < root.val:
+            if root.val > target:
                 root = root.left
             else:
                 root = root.right
             
-        return closest  
+        return closest 
