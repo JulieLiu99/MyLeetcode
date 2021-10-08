@@ -7,64 +7,56 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        """
+        Postorder DFS
+        
+        Search from top to bottom, and propogate from bottom to top
+        Return bottom-most node that contans both p and q in subtress
+        
+        Time O(n)
+        Space O(n)
         
         """
-        Recursion
-        Time complexity O(N): worst case visit all nodes due to recursive call 
-        Space complexity O(H) or O(N): the height where we find the LCA
+        def dfs(root, p, q):
+            if not root: 
+                return None
+            l = dfs(root.left, p, q)
+            r = dfs(root.right, p, q)
+            if root.val == p.val or root.val == q.val: 
+                return root
+            if l and r: 
+                return root
+            return l or r  
         
-        
-        # If looking for me, return myself
-        if root == p or root == q:
-            return root
-        
-        left = right = None
-        # else look in left and right child
-        if root.left:
-            left = self.lowestCommonAncestor(root.left, p, q)
-        if root.right:
-            right = self.lowestCommonAncestor(root.right, p, q)
+        return dfs(root, p, q)
 
-        # if both children returned a node, means
-        # both p and q found so parent is LCA
-        if left and right:
-            return root
-        else:
-        # either one of the chidren returned a node, meaning either p or q found on left or right branch.
-        # Example: assuming 'p' found in left child, right child returned 'None'. This means 'q' is somewhere below node where 'p' was found. We dont need to search all the way, because in such scenarios, node where 'p' found is LCA
-            return left or right
+    
+#         # 1. Search from top to bottom
+#         # if found bottom-most ancester, no need to go down further, start propagating
+#         # if reached the bottom, propagate not found
+        
+#         if not root: return 
             
-        
-        """
-        
-        
-        """
-        Iteration
-        Running time:
-        DFS will lead to O(N) since this is a binary tree and not a binary search tree. Two DFS operations will lead to O(N). Comparison work of the lists - using a while loop - to find common element will take O(N)
-        So total running time - O(N)
+#         if root == p or root == q:
+#             return root
 
-        Space
-        Lists to store paths can lead to O(N)
-        """
+#         ancestorLeft = self.lowestCommonAncestor(root.left, p, q)
+#         ancestorRight = self.lowestCommonAncestor(root.right, p, q)
+
+#         # 2. Propogate from bottom to top
         
-        # To find the lowest common ancestor, we need to find where is p and q and a way to track their ancestors. A parent pointer for each node found is good for the job
-        stack = [root]
-        parent = {root: None}
-        while p not in parent or q not in parent:
-            node = stack.pop()
-            if node.left:
-                parent[node.left] = node
-                stack.append(node.left)
-            if node.right:
-                parent[node.right] = node
-                stack.append(node.right)
-                
-        # After we found both p and q, we create a set of p's ancestors. Then we travel through q's ancestors, the first one appears in p's is our answer.
-        ancestors = set()
-        while p:
-            ancestors.add(p)
-            p = parent[p]
-        while q not in ancestors:
-            q = parent[q]
-        return q
+#         # If found ancestorLeft and ancestorRight below root, propagate root 
+#         # (which later might be propated up as ancestorLeft/ancestorRight)
+#         if ancestorLeft and ancestorRight:
+#             return root
+
+#         # If ancestorLeft contains pq, while ancestorRight contains nothing, propagate ancestorLeft
+#         if ancestorLeft:
+#             return ancestorLeft
+
+#         # If ancestorRight contains pq, while ancestorLeft contains nothing, propagate ancestorRight
+#         if ancestorRight:
+#             return ancestorRight
+
+#         else: 
+#             return 
