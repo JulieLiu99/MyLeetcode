@@ -3,7 +3,7 @@ class Solution:
         """
         Brute Force: O(n^3)
         
-        After sorting, if i, j, k is a valid triple, then i, j-1, k, ..., i, i+1, k are also valid triples. No need to count them one by one.
+        After sorting, if (i, j, k) is a valid triple, then (i, j-1, k), ..., (i, i+1, k) are also valid triples. No need to count them one by one.
         
         left ... right k
 
