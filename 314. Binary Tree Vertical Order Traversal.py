@@ -28,12 +28,11 @@ class Solution:
         """
         if not root:
             return []
-        q = deque([(root, 0)])
         
+        q = deque([(root, 0)])
         vertical_val = {}
         leftmost = 0
         rightmost = 0
-        res = []
         
         while q:
             for _ in range(len(q)):
@@ -52,6 +51,7 @@ class Solution:
                 if node.right:
                     q.append((node.right, vertical + 1))
         
+        res = []
         for j in range(leftmost, rightmost + 1):
             res.append(vertical_val[j])
         

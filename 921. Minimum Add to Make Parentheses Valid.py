@@ -13,7 +13,7 @@ class Solution:
         """
         
         left = 0
-        res = 0
+        right = 0
         
         for c in s:
             if c == "(":
@@ -22,7 +22,6 @@ class Solution:
                 if left:
                     left -= 1
                 else:
-                    res += 1
+                    right += 1
                     
-        res += left
-        return res
+        return left + right

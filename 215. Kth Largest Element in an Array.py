@@ -23,13 +23,9 @@ class Solution:
         Space O(1)
         
         """
-        
-        res = 0
-        
+                
         for i in range(k):
             for j in range(i+1, len(nums)):
                 if nums[i] < nums[j]:
-                    nums[i], nums[j] = nums[j], nums[i]
-            res = nums[i]
-        
-        return res
+                    nums[i], nums[j] = nums[j], nums[i]        
+        return nums[k-1]
