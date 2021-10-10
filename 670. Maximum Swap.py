@@ -10,17 +10,16 @@ class Solution:
         Space O(n)
         
         """
-        tracker = collections.defaultdict(int) # keep track of last idx of digits 0~9
-      
         num = [i for i in str(num)]
         
+        index = collections.defaultdict(int) # last idx of digits 0~9
         for i, c in enumerate(num):
-            tracker[int(c)] = i
+            index[int(c)] = i
             
         for i, c in enumerate(num):
-            for k in range(9, -1, -1):
-                if k > int(c) and tracker[k] > i:
-                    num[i], num[tracker[k]] = num[tracker[k]], num[i]
+            for k in range(9, int(c), -1):
+                if k in index and index[k] > i:
+                    num[i], num[index[k]] = num[index[k]], num[i]
                     return int(''.join(num))
 
         return int(''.join(num))
