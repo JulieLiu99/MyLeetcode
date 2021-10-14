@@ -23,11 +23,11 @@ class Solution:
             
             m = l + (r-l)//2
             
-            if m+1 < len(nums) and nums[m+1] >= nums[m]:
+            if m+1 < len(nums) and nums[m] <= nums[m+1]:
                 l = m
                 
-            elif m-1 >= 0 and nums[m-1] > nums[m]:
+            elif m-1 >= 0 and nums[m] <= nums[m-1]:
                 r = m
                 
-            else: # neither left nor right is higher than current m
+            else: # higher than both left and right side -> peak!
                 return m

@@ -18,24 +18,24 @@ class Solution:
         
         """
         q = collections.deque([(root, 0, 0)])
-        res = [(0, 0, root.val)]
+        nodes = [(0, 0, root.val)]
         while q:
             for _ in range(len(q)):
                 node, row, col = q.popleft()
                 if node.left:
                     q.append((node.left, row + 1, col - 1))
-                    res.append((col - 1, row + 1, node.left.val))
+                    nodes.append((col - 1, row + 1, node.left.val))
                 if node.right:
                     q.append((node.right, row + 1, col + 1))
-                    res.append((col + 1, row + 1, node.right.val))
+                    nodes.append((col + 1, row + 1, node.right.val))
                     
-        res.sort() # sort by col first, then row, then val
+        nodes.sort() # sort by col first, then row, then val
         i = 0
         result = []
-        while i < len(res):
-            result.append([res[i][2]])
-            while i + 1 < len(res) and res[i + 1][0] == res[i][0]: # same col
-                result[-1].append(res[i + 1][2])
+        while i < len(nodes):
+            result.append([nodes[i][2]])
+            while i + 1 < len(nodes) and nodes[i + 1][0] == nodes[i][0]: # same col
+                result[-1].append(nodes[i + 1][2])
                 i += 1
             i += 1
         return result

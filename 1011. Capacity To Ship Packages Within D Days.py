@@ -1,31 +1,26 @@
 class Solution:
-    def shipWithinDays(self, weights: List[int], D: int) -> int:
+    def shipWithinDays(self, weights: List[int], days: int) -> int:
+        """
+        Binary Search
+        Time O(nlogn)
         
         """
-        Binary search
-        
-        Time O(log(sum(weights) - max(weights)) * n)
-        Space O(1)
-        
-        """
-        
-        def isOK(capacity):
-            total, days = 0, 1
-            for w in weights:
-                if total + w > capacity:
+        def need_days(weights, capacity):
+            cur = 0
+            days = 1
+            for weight in weights:
+                if cur + weight > capacity:
                     days += 1
-                    total = w
-                else:
-                    total += w
-            if days <= D:
-                return True
-            return False
+                    cur = 0
+                cur += weight
+            return days
         
-        left, right = max(weights), sum(weights)   
-        while left < right:
-            mid = (left + right) // 2
-            if isOK(mid):
-                right = mid
-            else:
-                left = mid+1
-        return left
+        l = max(weights) - 1
+        r = sum(weights) + 1
+        while l + 1 != r:
+            m = (l + r) // 2
+            if need_days(weights, m) <= days: # meets requirement, try to search for smaller
+                r = m
+            else: 
+                l = m
+        return r

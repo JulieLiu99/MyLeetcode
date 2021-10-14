@@ -24,7 +24,7 @@ class Solution:
             # process previous operator and previous num
             elif c in "+-*/#":
                 
-                if not operator: # the first num
+                if not operator: # curNum is the first num
                     stack.append(curNum)
                     
                 elif operator == "+":
