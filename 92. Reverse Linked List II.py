@@ -4,50 +4,47 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
         
         """
-        0) Dummy node to mark the start
-        
-        1) Locate the node previous to the left position
-        
-        2) Reverse till we reach the right position
-            each time, reverse from: cur -> nextt -> tmp
-                                 to: cur <- nextt -X- tmp
-                                 
-        3) Connect the three parts of lists 
+        1. Traverse + Reverse:
+        prev -> head -> nextt
+                cur
+                
+        2. Attach
         
         Time O(n)
         Space O(1)
         
         """
-
-        dummy = ListNode(0, head)
-
-        pre_left = dummy
-        for i in range(left-1):
-            pre_left = pre_left.next
-            
-        # each time, reverse between cur and nextt:
-        #
-        # pre_left -> cur <- nextt -X- tmp -> ...
-        #            --------------
-        # pre_left -> ... <- cur <- nextt -> temp -> 
-        #                   --------------
-        #          till cur is at right position
-        #       and nextt is start of the ending part
-        cur = pre_left.next
-        nextt = cur.next
-        for i in range(right-left):
-            tmp = nextt.next
-            nextt.next = cur
-            cur = nextt
-            nextt = tmp
-            
-        # connect pre_left to reversed part
-        # and reversed part to ending part
-        new_left = pre_left.next
-        pre_left.next = cur
-        new_left.next = nextt
+        if not head or not head.next: 
+            return head
         
-        return dummy.next
+        dummy_head = ListNode(next = head)
+        pre = dummy_head
+        reverse = False
+        i = 1
+        while True:
+            if i == left: # start of reverse
+                end_of_first = pre
+                start_of_reversed = head
+                reverse = True
+            if i == right + 1:  # end of reverse
+                end_of_reversed = pre
+                start_of_third = head
+                break
+            if reverse:  # prev -> head (cur) -> nextt
+                cur = head
+                head = head.next
+                cur.next = pre
+                pre = cur
+            else:
+                pre = head
+                head = head.next
+            i += 1
+            
+        if reverse: # connect starting part -> reversed part -> ending part
+            end_of_first.next = end_of_reversed
+            start_of_reversed.next = start_of_third
+            
+        return dummy_head.next
