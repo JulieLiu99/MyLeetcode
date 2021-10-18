@@ -20,7 +20,7 @@ class Solution:
         Space O(n)
         
         """
-        to19 = 'One Two Three Four Five Six Seven Eight Nine Ten Eleven Twelve Thirteen Fourteen Fifteen Sixteen Seventeen Eighteen Nineteen'.split()
+        to19 = '- One Two Three Four Five Six Seven Eight Nine Ten Eleven Twelve Thirteen Fourteen Fifteen Sixteen Seventeen Eighteen Nineteen'.split()
         tens = '- - Twenty Thirty Forty Fifty Sixty Seventy Eighty Ninety'.split()
         
         # 1 billion = 10^9
@@ -35,12 +35,12 @@ class Solution:
             if num == 0: 
                 return ""
             
-            # For 0< nums <= 99:
+            # For 0 < nums <= 99:
             # if at start, one extra space -> handled at the end
             # if in middle, serve as space between this part and prev part -> any positive num will come here, so makes sense to add space here
             
             if num <= 19: 
-                return " " + to19[num-1]    
+                return " " + to19[num]    
             
             # 99 = tens[99//10] + to19[99%10] = Ninety Nine 
             # 20 = tens[20//10] = Twenty
@@ -56,7 +56,7 @@ class Solution:
             # 1000 = recursor(1) + " Thousand "+ recursor(0)
             # 1001 = recursor(1) + " Thousand "+ recursor(1)
             # 9999 = recursor(9) + " Thousand "+ recursor(1)
-            # max= 99 thousands + 9 hundred 99
+            # max= 999 thousands + 9 hundred 99
             if num <= 10**6-1: 
                 return recursor(num//1000) + " Thousand"+ recursor(num%1000)
 

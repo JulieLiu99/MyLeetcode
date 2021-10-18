@@ -13,23 +13,52 @@ class Solution:
         
         """
         """
-        This implementation takes too much space
+        TLE
         
         """
 #         res = float("inf")
         
-#         def dfs(days, money):
+#         @lru_cache(None)
+#         def dfs(i, money):
 #             nonlocal res
-#             if not days:
+#             if i == len(days):
 #                 res = min(res, money)
             
 #             for cost, cover in zip(costs, [1,7,30]):
-#                 days = [day for day in days if day >= days[0] + cover]
-#                 dfs(days, money + cost)
+#                 j = i
+#                 while j < len(days) and days[j] < days[i] + cover:
+#                     j += 1
+#                 dfs(j, money + cost)
                 
-#         dfs(days, 0)
+#         dfs(0, 0)
 #         return res
-
+    
+        """
+        Top down recursion + memorization
+        
+        """
+        n = len(days)
+        
+        memo = {}
+        def dfs(i):
+            if i in memo:
+                return memo[i]
+            
+            if i == n:
+                return 0
+            
+            res = float('inf')
+            for cost, cover in zip(costs, [1, 7, 30]):
+                j = i
+                while j < n and days[j] < days[i] + cover:
+                    j += 1
+                res = min(res, cost + dfs(j))
+            
+            memo[i] = res
+            return memo[i]
+        
+        return dfs(0)
+    
         """
         Optimized:
         1. Pass index instead of days[] list
@@ -74,16 +103,16 @@ class Solution:
         Space O(days[-1])
         
         """
-        s = set(days)
-        durations = [1, 7, 30]
-        dp = [0] + [0] * days[-1]
+#         s = set(days)
+#         covers = [1, 7, 30]
+#         dp = [0] + [0] * days[-1]
         
-        for i in range(1, len(dp)):
+#         for i in range(1, len(dp)):
             
-            if i not in s: # if not a day in days, use value carried on from last valid day
-                dp[i] = dp[i - 1]
+#             if i not in s: # if not a day in days, use value carried on from last valid day
+#                 dp[i] = dp[i - 1]
 
-            else:
-                dp[i] = min([dp[(i - duration) if i - duration >= 0 else 0] + cost for duration, cost in zip(durations, costs)])
+#             else:
+#                 dp[i] = min([dp[(i-cover) if i-cover >= 0 else 0] + cost for cover, cost in zip(covers, costs)])
                 
-        return dp[-1]
+#         return dp[-1]

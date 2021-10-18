@@ -27,12 +27,29 @@ class Solution:
         Space O(1)
         
         """
-        counter = 0
-        prev = 0
-        for i in range(len(arr)):
-            counter +=  arr[i] - prev - 1
-            if counter >= k:
-                return arr[i] - 1 - (counter - k)
-            prev = arr[i]
+#         counter = 0
+#         prev = 0
+#         for i in range(len(arr)):
+#             counter +=  arr[i] - prev - 1
+#             if counter >= k:
+#                 return arr[i] - 1 - (counter - k)
+#             prev = arr[i]
             
-        return arr[-1] + k - counter
+#         return arr[-1] + k - counter
+
+        """
+        Binary Search
+        
+        Time O(logn)
+        Space O(1)
+        
+        """
+        l = -1
+        r = len(arr)
+        while l + 1 != r:
+            m = l + (r-l)//2
+            if arr[m] - (m+1) >= k: # go left
+                r = m
+            else:
+                l = m
+        return 1 + l + k   # missing num is between l and r

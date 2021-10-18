@@ -1,31 +1,57 @@
 class Solution:
     def divide(self, dividend: int, divisor: int) -> int:
-        
         """
-        Time O(log^(n)): n is the number of bits
-        time goes up linearly while temp goes up exponentially
-        Space O(1)
+        Divide two integers without using 
+            multiplication, 
+            division, 
+            and mod operator.
         
+        Division --can be converted to--> Deletion (from dividend delete divisor)
+        
+        Optimization: We want to delete as few times as possible
+        -> Increase the divisor, by *2 (or left shift) 
+        12 / 3 = 4
+           / 6 = 2 (each divisor 6 divides twice as much as 3)
+           
+        -> Increase the result by the number of *2 (or left shift) applied to divisor
+        
+        Time (log2(dividend/divisor))
+    
         """
         
-        negative = (dividend < 0) ^ (divisor < 0)
-        dividend, divisor = abs(dividend), abs(divisor)
-        res = 0
+        MIN_VAL = -2**31
+        MAX_VAL = 2**31 - 1
         
-        while dividend >= divisor:
-            temp, i = divisor, 1    # temp: 1 --> 2 --> 4 --> 16 --> ...
-            while dividend >= temp:
-                dividend -= temp
-                res += i
-                i <<= 1
-                temp <<= 1
-                
-        if negative:
-            res = -res
-            res = max(-2147483648, res)
-        else:
-            res = min(2147483647, res)
+        # edge case when divisor = 1/-1
+        if divisor == 1:
+            if dividend < MIN_VAL or dividend > MAX_VAL:
+                return 2**31 - 1
+            else:
+                return dividend
+        elif divisor == -1:
+            if -dividend < MIN_VAL or -dividend > MAX_VAL:
+                return 2**31 - 1
+            else:
+                return -dividend
             
-        return res
-
+        sign = -1 if (dividend < 0 and divisor > 0) or (divisor < 0 and dividend > 0) else 1
+        
+        dividend = abs(dividend) 
+        divisor = abs(divisor) 
+    
+        res = 0 
+        shift = 31 # at most 31 left shift can be done on a integer value 
+        while dividend >= divisor: # if dividend < divisor, truncate towards 0
+            
+            while dividend < (divisor << shift): # decrease divisor so it maximumly reaches the dividend
+                shift -= 1
+                
+            dividend -= divisor << shift # subtract the left shifted divisor
+            res += 1 << shift # left shift 1 by shifts used for divisor
+            
+        if sign == -1: res = -res   
+        if res < MIN_VAL or res > MAX_VAL:
+            return 2**31 - 1
+        else:
+            return res
 

@@ -3,47 +3,26 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         
-        Two pointers, while loop
+        Two pointers
         
-        Increment i if nums1[i] is smaller or equal
-        Insert when nums2[j] is bigger
-        Before insert, shift nums1 from i onwards back
+        Since in place, gradually appending larger ones of nums1 and nums2 to the end
+        If there is any space and nums2 left, put rest of nums2 into the space
         
-        Time O(n)
+        Time O(m+n)
         Space O(1)
         
         """
-        
-        if n == 0: 
-            return  # m as it is
-        
-        if m == 0: 
-            nums1[:] = nums2[:]
-            return 
-                
-        i = 0
-        j = 0
-        
-        # m + j is the length of nums1 plus num2 inserted into nums1
-        while i < m + j and j < n:
-        
-            if nums1[i] <= nums2[j]:
-                i += 1
-              
-            # [1,2,3,0,0,0] 
-            #      ^
-            # [2,5,6]
-            #  ^
-            # [1,2,2,3,0,0] 
-            #        ^
-            # [-,5,6]
-            #    ^
+        i = m-1
+        j = n-1
+        k = m+n-1
+        while i >= 0 and j >= 0:
+            if nums2[j] >= nums1[i]:
+                nums1[k] = nums2[j]
+                j -= 1
             else:
-                nums1[i+1:] = nums1[i:m+n-1]    # shift nums1 from i+1 onwards back
-                nums1[i] = nums2[j]
-                i += 1
-                j += 1
-                
-        if j < n:   # nums2 left
-            nums1[-(n-j):] = nums2[j:]
-                
+                nums1[k] = nums1[i]
+                i -= 1
+            k -= 1
+            
+        if j >= 0: # put remaining nums2 into empty space
+            nums1[:k+1] = nums2[:k+1]

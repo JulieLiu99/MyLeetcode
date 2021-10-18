@@ -49,17 +49,17 @@ class Solution:
         stack = []
         val = ""
         for ch in s: 
-            if ch == "(": 
+            if ch == "(": # end of parent
                 if val: 
                     node = TreeNode(int(val))
                     stack.append(node)
                     val = ""
                     
             elif ch == ")": 
-                if val:  # new node 
+                if val:  # end of new node 
                     node = TreeNode(int(val))
                     val = ""
-                else:    # previous subtree of nodes
+                else:    # end of subtree
                     node = stack.pop()
                     
                 if stack[-1].left is None: 
@@ -68,4 +68,8 @@ class Solution:
                     stack[-1].right = node
                     
             else: val += ch
-        return stack[-1] if stack else TreeNode(int(val))
+                
+        if stack: # there is root parent
+            return stack[-1] 
+        else:   # just one node
+            return TreeNode(int(val))

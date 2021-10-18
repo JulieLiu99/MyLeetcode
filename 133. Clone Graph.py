@@ -17,9 +17,9 @@ class Solution:
         """
         
 #         if not node: 
-#             return node
+#             return
         
-#         copy  = collections.defaultdict(list)
+#         copy  = {}
 #         def dfs(node):
 #             copy[node] = Node(node.val)     # copy node
 #             for neighbor in node.neighbors: # copy node's neighbors

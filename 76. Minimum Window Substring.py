@@ -4,7 +4,7 @@ class Solution:
         """
         Brute Force
         Two pointers l and r
-        For each l, use l to scan rest of s
+        For each l, use r to scan rest of s
         Record char in s[l:r+1] that matches with char in t
         If t all matched, update res
         
@@ -21,15 +21,13 @@ class Solution:
 #         r = 0
 #         res = ""
         
-#         while l<=n-1:
+#         while l < n:
 #             temp = t[:]
-#             while r<=n-1:
+#             while r < n:
 #                 if s[r] in temp:
-#                     temp = temp.replace(s[r], '', 1)  # remove s[r] from temp
-#                     if temp == "":
-#                         if res == "":
-#                             res = s[l:r+1]
-#                         elif r-l+1 < len(res):
+#                     temp = temp.replace(s[r], '', 1)  # match
+#                     if temp == "":  # all matched
+#                         if not res or r-l+1 < len(res):
 #                             res = s[l:r+1]
 #                 r += 1
 #             l += 1
@@ -49,13 +47,11 @@ class Solution:
         
         """
 
-        countT = collections.defaultdict(int)
-        window = collections.defaultdict(int)
-        for c in t:
-            countT[c] += 1
-            
-        have = 0
+        countT = collections.Counter(t)
         need = len(countT)
+        
+        window = collections.defaultdict(int)
+        have = 0
         res = ""
         l = 0
         
@@ -64,13 +60,11 @@ class Solution:
                 window[s[r]] += 1
                 if window[s[r]] == countT[s[r]]:
                     have += 1
-            while have == need: # update result and try to move l
-                if res == "":
+            while have == need: # update result and move l
+                if not res or r-l+1 < len(res):
                     res = s[l:r+1]
-                elif r-l+1 < len(res):
-                    res = s[l:r+1]
-                # pop from the left of window
-                if s[l] in countT:
+
+                if s[l] in countT: # pop from left of window
                     window[s[l]] -= 1
                     if window[s[l]] < countT[s[l]]:
                         have -= 1

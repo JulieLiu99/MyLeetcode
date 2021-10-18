@@ -47,20 +47,20 @@ class Solution:
         Space O(n)
         
         """
-        stack = []
+        stack = [] # [val, count]
         
-        for ele in s:
+        for val in s:
             
-            if stack and stack[-1][0] == ele:
+            if stack and stack[-1][0] == val:
                 stack[-1][1] += 1
-                if stack[-1][1] >= k:
+                if stack[-1][1] == k:
                     stack.pop()
             else:
-                stack.append([ele, 1])
+                stack.append([val, 1])
             
         output = ''
-        for ele in stack:
-            output += ele[0] * ele[1]
+        for val, count in stack:
+            output += val * count
             
         return output
         

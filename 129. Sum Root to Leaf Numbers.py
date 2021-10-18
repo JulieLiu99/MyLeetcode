@@ -6,31 +6,32 @@
 #         self.right = right
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        """
+        Preorder Traversal
+        
+        If left: cur += left.val
+        If right: cur += right.val
+        
+        Before return to node, remove last char in cur
+        
+        Time O(n)
+        Space O(n)
         
         """
-        BFS
+        if not root: return
         
-        q stores [node, path]
+        nums = []
         
-        Time O(n): visit each node once
-        Space O(n): q O(width), paths O(width*height)
-        
-        """
-        q = deque([(root, str(root.val))])
-        paths = []
-        
-        while q:
-            for _ in range(len(q)):
-                node, path = q.popleft()
-                if not node.left and not node.right:    # node is leaf
-                    paths.append(path)
-                if node.left: 
-                    q.append((node.left, path+str(node.left.val)))
-                if node.right: 
-                    q.append((node.right, path+str(node.right.val)))
-                
-        res = 0
-        for path in paths:
-            res += int(path)
+        def preorder(node, cur):
+
+            cur += str(node.val)
+    
+            if not node.left and not node.right: # leaf, num is complete
+                nums.append(int(cur))
+                return 
             
-        return res
+            if node.left: preorder(node.left, cur)
+            if node.right: preorder(node.right, cur)
+            
+        preorder(root, "")
+        return sum(nums)

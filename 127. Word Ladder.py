@@ -50,3 +50,29 @@ class Solution:
             res += 1
         
         return res
+
+
+	"""
+        BFS
+        
+        Time O(L * 26 * n): L is length of word, n is size of wordList
+        Space O(n)
+         
+        """
+        wordList = set(wordList)
+        q = collections.deque([[beginWord, 1]])
+        
+        while q:
+            word, length = q.popleft()
+            
+            if word == endWord:
+                return length
+            
+            for i in range(len(word)):
+                for c in 'abcdefghijklmnopqrstuvwxyz': # try all replacements
+                    next_word = word[:i] + c + word[i+1:]
+                    if next_word in wordList:
+                        wordList.remove(next_word) # don't revisit
+                        q.append([next_word, length+1])
+                        
+        return 0

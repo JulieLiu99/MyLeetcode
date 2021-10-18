@@ -3,86 +3,64 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
 class Solution:
-    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        """
+        Divide-and-Conquer 
+        
+        Time O(nlogn)
+        Space O(n)
         
         """
-        Min Heap
+#         def merge(l1, l2):
+#             dummy = ListNode()
+#             cur = dummy
+#             while l1 and l2:
+#                 if l1.val <= l2.val:
+#                     cur.next = l1
+#                     cur = l1
+#                     l1 = l1.next
+#                 else:
+#                     cur.next = l2
+#                     cur = l2
+#                     l2 = l2.next
+#             cur.next = l1 if l1 else l2
+#             return dummy.next
         
-        Insert head of all lists into a priority queue
-        
-        While pq is not empty:
-            pop the top (min)
-            insert into answer (dummy head)
-            if cur-->next, push to pq
-            
-        Time O(nk logk)
-        Space O(n) + O(k)
-        
-        k is the number of lists. n is length per list.
-        
-        heapq is a binary heap, with O(log n) push and O(log n) pop.
-        In total nk elements.
-        
-        The priority queue is aleays size k.
-        The answer is size n.
-        
-        
-        """
+#         n = len(lists)
+#         if n == 0:
+#             return None
+#         if n == 1:
+#             return lists[0]
+#         mid = n//2
+#         l1 = self.mergeKLists(lists[:mid])
+#         l2 = self.mergeKLists(lists[mid:])
+#         return merge(l1, l2)
 
-        dummy = cur = ListNode(0)
-           
-        heap = []
-        for i in range(len(lists)):
-            if lists[i]: 
-                heapq.heappush(heap, (lists[i].val, i, lists[i]))
-                
-        while heap:
-            node = heapq.heappop(heap)
-            idx = node[1]
-            cur.next = node[2]  
-            cur = cur.next
-            
-            if cur.next:
-                heapq.heappush(heap, (cur.next.val, idx, cur.next))
-
-        return dummy.next
-    
 
         """
-        Divide and Conquer
+        Heap
         
-        MergeSort
+        Time O(nlogk)
+        Space O(k)
         
-        Time O(nk logk)
-        Space O(logk) 
-        
-        Height of merge tree is logk  
-        
-        """
+        Note: push (node.val, i, node) to heap
+        i is there so that node does not get involved into heat sorting
+        when node.val of two items are the same, i resolves the comparison
         
         """
-        if not lists:
-            return None
-        if len(lists) == 1:
-            return lists[0]
-        
-        mid = len(lists) // 2
-        l, r = self.mergeKLists(lists[:mid]), self.mergeKLists(lists[mid:])
-        return self.merge(l, r)
-    
-    def merge(self, l, r):
-        dummy = cur = ListNode()
-        while l and r:
-            if l.val < r.val:
-                cur.next = l
-                l = l.next
-            else:
-                cur.next = r
-                r = r.next
-            cur = cur.next
-        cur.next = l or r
-        return dummy.next
-        
-        """
+        dummyhead = pre = ListNode()
+        q = []
+        i = 0
+        for l in lists:
+            if l:
+                heapq.heappush(q, (l.val, i, l))
+                i += 1
+        while q:
+            val, _, node = heapq.heappop(q)
+            pre.next = node
+            pre = node
+            if node.next:
+                heapq.heappush(q, (node.next.val, i, node.next))
+                i += 1
+        return dummyhead.next

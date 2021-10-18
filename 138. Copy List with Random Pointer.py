@@ -21,23 +21,21 @@ class Solution:
         Two Pass
         
         """
-        if not head: 
-            return 
+#         if not head: return 
         
-        copied = {}
+#         copied = {}
+#         node = head
+#         while node: # make copy and store in to hashmap
+#             copied[node] = Node(node.val)
+#             node = node.next
         
-        node = head
-        while node != None: # make copy and store in to hashmap
-            copied[node] = Node(node.val)
-            node = node.next
-        
-        for node, copy in copied.items(): # assign pointers for the copied nodes
-            if node.next:
-                copy.next = copied[node.next]
-            if node.random:
-                copy.random = copied[node.random]
+#         for node, copy in copied.items(): # assign pointers for the copied nodes
+#             if node.next:
+#                 copy.next = copied[node.next]
+#             if node.random:
+#                 copy.random = copied[node.random]
             
-        return copied[head]
+#         return copied[head]
         
         """
         Time O(n)
@@ -69,3 +67,43 @@ class Solution:
 #             node = node.next
             
 #         return copied[head]
+
+
+        """
+        Iterative with O(1) Space
+        
+        """
+    
+        if not head:
+            return
+
+        # interwave of orignal and copies
+        # cur -> copy -> nextt -> ...
+        cur = head
+        while cur:
+            copy = Node(cur.val)
+            nextt = cur.next
+            cur.next = copy
+            copy.next = nextt
+            cur = nextt
+
+        # assign random pointers
+        cur = head
+        while cur:
+            copy = cur.next
+            if cur.random:
+                copy.random = cur.random.next
+            cur = copy.next
+
+        # unweave the linked list, assign next pointers
+        cur = head 
+        copy = head.next 
+        head_copy = head.next
+        while cur:
+            nextt = copy.next
+            cur.next = nextt
+            if nextt:
+                copy.next = nextt.next
+            cur = nextt
+            copy = copy.next
+        return head_copy

@@ -13,11 +13,15 @@ class Solution:
         Space O(1)
         
         """
-        l, r = 0, 10**5+1
+        def cut_into(length):
+            return sum(ribbon//length for ribbon in ribbons)
+        
+        l = 0
+        r = 10**5+1
         while l + 1 != r: 
-            same_length = l + (r-l)//2
-            if sum(ribbon//same_length for ribbon in ribbons) < k: 
-                r = same_length
+            length = l + (r-l)//2
+            if cut_into(length) < k: # need smaller length
+                r = length
             else: 
-                l = same_length
+                l = length
         return l 
