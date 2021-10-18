@@ -7,31 +7,30 @@ class Solution:
         
         """
         
-        sign = 1
-        max_int, min_int = 2147483647, -2147483648
+        s = s.strip() # trim white space
+        if not s: return 0
         
-        result, pos = 0, 0
-        ls = len(s)
-        while pos < ls and s[pos] == ' ':     # leading whitespace
-            pos += 1
-        if pos < ls and s[pos] == '-':        # sign
+        MAX_NUM = 2 ** 31 - 1
+        MIN_NUM = -2 ** 31
+        
+        if s[0] == '-':
             sign = -1
-            pos += 1
-        elif pos < ls and s[pos] == '+':
-            pos += 1
+            i = 1
+        elif s[0] == '+':
+            sign = 1
+            i = 1
+        else:
+            sign = 1
+            i = 0
             
-        while pos < ls and ord(s[pos]) >= ord('0') and ord(s[pos]) <= ord('9'):
-            # ord() function returns an integer representing the Unicode character
-            
-            num = ord(s[pos]) - ord('0')
-            
-            if result > int(max_int/10) or ( result == int(max_int/10) and num >= 8):
-                if sign == -1:
-                    print(min_int)
-                    return min_int
-                return max_int
-            result = result * 10 + num
-            
-            pos += 1
-                        
-        return sign * result
+        num = 0
+        while i < len(s) and s[i].isdigit():
+            cur_digit = ord(s[i]) - ord('0')
+            # check before adding current digit
+            # 2^31 - 1 = 2147483647
+            if num > MAX_NUM//10 or (num == MAX_NUM//10 and cur_digit > 7): 
+                return MAX_NUM if sign == 1 else MIN_NUM
+            num = num * 10 + cur_digit
+            i += 1
+        
+        return sign * num  

@@ -22,12 +22,14 @@ class Solution:
         self.buf = deque()
         
     def read(self, buf: List[str], n: int) -> int:
+        # read into deque
         next_buf = 4*['']
         while len(self.buf) < n and read4(next_buf):
             self.buf.extend(next_buf)
             next_buf = 4*['']
-        buf_ptr = 0
-        while self.buf and buf_ptr < n:
-            buf[buf_ptr] = self.buf.popleft()
-            buf_ptr += 1
-        return buf_ptr
+        # copy to array
+        i = 0
+        while self.buf and i < n:
+            buf[i] = self.buf.popleft()
+            i += 1
+        return i

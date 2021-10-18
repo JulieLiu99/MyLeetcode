@@ -24,8 +24,30 @@ class Solution:
         
         """
                 
-        for i in range(k):
-            for j in range(i+1, len(nums)):
-                if nums[i] < nums[j]:
-                    nums[i], nums[j] = nums[j], nums[i]        
-        return nums[k-1]
+        # for i in range(k):
+        #     for j in range(i+1, len(nums)):
+        #         if nums[i] < nums[j]:
+        #             nums[i], nums[j] = nums[j], nums[i]        
+        # return nums[k-1]
+        
+        """
+        Quick Sort
+        
+        Time O(n)
+        Space O(1)
+        
+        """
+        if not nums: return
+        pivot = random.choice(nums)
+        left =  [x for x in nums if x > pivot]
+        mid  =  [x for x in nums if x == pivot]
+        right = [x for x in nums if x < pivot]
+        
+        L, M = len(left), len(mid)
+        
+        if k <= L:
+            return self.findKthLargest(left, k)
+        elif k > L + M:
+            return self.findKthLargest(right, k - L - M)
+        else:
+            return mid[0]

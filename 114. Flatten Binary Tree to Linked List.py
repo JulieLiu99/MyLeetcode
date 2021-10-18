@@ -5,68 +5,60 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def flatten(self, root: TreeNode) -> None:
+    def flatten(self, root: Optional[TreeNode]) -> None:
         """
         Do not return anything, modify root in-place instead.
         """
         """
+        DFS Recursion
+        
+        Time O(n)
+        Space O(n): height of tree, O(n) as doesn't say about tree being balanced or not 
+N. 
+        
+        """
+#         def dfs(node):
+#             if not node: 
+#                 return 
+
+#             if not node.left and not node.right: # leaf
+#                 return node
+
+#             leftTail = dfs(node.left)
+#             rightTail = dfs(node.right)
+
+#             if leftTail:
+#                 leftTail.right = node.right
+#                 node.right = node.left
+#                 node.left = None
+
+#             return rightTail if rightTail else leftTail
+
+#         dfs(root)
+        
+        """
         Iteration
         
-        Morris Traversal
-        
-        Level by level
-        right_most_node_in_left_subtree.right = root.right
-        root.right = root.left
-        root.left = None
-        -> move to next level: root = root.right
-        
-        Time O(n): need to visit every node
-        Spac O(1): no additional space
+        Time O(n)
+        Space O(1)
         
         """
+        if not root:
+            return 
         
-#         if not root: return 
-        
-#         while root:
+        node = root
+        while node:
             
-#             if root.left: # if left subtree, move it to right
-#                 left = root.left
-#                 while left.right:
-#                     left = left.right
-#                 # left is the right most node in the left subtree
-#                 left.right = root.right
-#                 root.right = root.left
-#                 root.left = None
+            if node.left:
                 
-#             root = root.right
+                rightmost = node.left
+                while rightmost.right:
+                    rightmost = rightmost.right
+                
+                # rewire the connections
+                rightmost.right = node.right
+                node.right = node.left
+                node.left = None
             
-#         return
-        
-        """
-        Recursion
-        
-        Flatten both left subtree and right subtree, by calling self.flatten()
-        Connect: None <- root -> left subtree -> right subtree
-        
-        Time O(n): need to visit every node
-        Space O(height of tree): recursion stack
-        
-        """
-        
-        if not root: return 
-        
-        left = root.left
-        right = root.right
-        
-        self.flatten(left)
-        self.flatten(right)
-        
-        if left:
-            while left.right: 
-                left = left.right
-            # left is the right most node in the left subtree
-            left.right = right
-            root.right = root.left
-            root.left = None
-
-        return 
+            # move on to next node in the linked list
+            node = node.right
