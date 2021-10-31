@@ -1,39 +1,16 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        """
-        Searching: DFS
-        
-        """
-        
+
         res = []
-        candidates.sort()
         
-        def dfs(target, index, path):
+        def dfs(target, i, path):
             if target < 0:
-                # backtracking
-                # failed attempt
                 return  
             if target == 0:
-                # path works!
                 res.append(path)
                 return 
-            for i in range(index, len(candidates)):
-                """
-                try all possible (path, [candidates[i]])
-                [] [2]
-                [2] [2]
-                [2, 2] [2]
-                [2, 2, 2] [2]
-                [2, 2, 2] [3]
-                [2, 2, 2] [6]
-                ...
-                [3] [7]
-                [] [6]
-                [6] [6]
-                [6] [7]
-                [] [7]
-                """
-                dfs(target-candidates[i], i, path+[candidates[i]])
+            for j in range(i, len(candidates)): # can reuse number at i
+                dfs(target-candidates[j], j, path+[candidates[j]])
         
         dfs(target, 0, [])
         return res
