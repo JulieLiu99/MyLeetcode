@@ -13,6 +13,9 @@ class Solution:
         # Time O(n)
         # Space O(n)
         
+        
+        # 0 [2 1 2] 0  -> 4 subarrays with 1 as min
+        
         n = len(nums)
         sum_min = sum_max = 0
         
