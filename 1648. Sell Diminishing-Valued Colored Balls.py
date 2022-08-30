@@ -33,7 +33,7 @@ class Solution:
                     if orders == 0: return res % (10**9 + 7)
                     
                 else: # don't need all
-                    quotient, remainder = divmod(orders, k)
+                    quotient, remainder = orders // k, orders % k
                     res += k * (inventory[i] + inventory[i] - quotient + 1) * quotient // 2 + remainder * (inventory[i] - quotient)
                     return res % (10**9 + 7)
                 
