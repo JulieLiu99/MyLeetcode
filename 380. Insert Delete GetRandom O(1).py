@@ -5,7 +5,7 @@ class RandomizedSet:
     Use a random number generator to get a random index
     Store all numbers into an array -> use the random index to get a random number
     
-    Use a hashmap for number lookup, used in insert() amd remove()
+    Use a hashmap for number lookup, used in insert() and remove()
     In order to keep array and hashmap the same, esp. during remove(), store index of nums in array into hashmap, and use the index to remove num from array
     
     Time O(1)
@@ -38,12 +38,11 @@ class RandomizedSet:
         """
         if val not in self.hashmap: 
             return False
-        last_idx = len(self.arr) - 1
-        last_element = self.arr[last_idx]
-        if val != last_element: # swap val with last_element in arr
-            idx = self.hashmap[val]
-            self.arr[idx], self.arr[last_idx] = self.arr[last_idx], self.arr[idx]
-            self.hashmap[last_element] = idx
+        idx = self.hashmap[val]
+        if idx != len(self.arr) - 1: # not the last element -> swap with the last element in arr
+            orignal_last_val = self.arr[-1]
+            self.arr[idx], self.arr[-1] = self.arr[-1], self.arr[idx]
+            self.hashmap[orignal_last_val] = idx
         self.arr.pop()
         del self.hashmap[val]
         return True
