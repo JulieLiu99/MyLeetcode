@@ -20,9 +20,9 @@ class Solution:
         """
         current = head
         
-        while current is not None:
+        while current:
             # check for child node
-            if current.child is not None:
+            if current.child:
                 # merge child list into the parent list
                 self.merge(current)
                 
@@ -36,11 +36,11 @@ class Solution:
         child = current.child
         
         # traverse until the last node of the child list
-        while child.next is not None:
+        while child.next:
             child = child.next
         
         # connect child.next to current.next, if there is any
-        if current.next is not None:
+        if current.next:
             child.next = current.next
             current.next.prev = child
         
@@ -48,5 +48,5 @@ class Solution:
         current.next = current.child
         current.child.prev = current
         
-        # at the end remove self.child pointer
+        # remove self.child pointer
         current.child = None

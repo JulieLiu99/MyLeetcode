@@ -5,43 +5,44 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         """
-        preorder: root, [left...], [right...]
-        inorder: [left...], root, [right...]
-        preorder --> inorder: find index of root in inorder
+        Preorder: [root, left branch, right branch]
+                    ^
+        Inorder:  [left branch, root, right branch]
+                                 ^idx
+        Time O(n^2): O(n) calls, each O(n) time from index and slicing
+        Space O(n^2): O(n) calls, each O(n) space from slicing
         
-        list.pop(0) takes O(n) time because all elements have to be shifted
+        """
+        """
+        Directly pass in sliced preorder and inorder
         """
         
-        """
-        if inorder:
-            ind = inorder.index(preorder.pop(0))
-            root = TreeNode(inorder[ind])
-            root.left = self.buildTree(preorder, inorder[0:ind])
-            root.right = self.buildTree(preorder, inorder[ind+1:])
-            return root
-        """
-        """
-        Use list.pop(0) instead, which costs O(1)
-        Use map_inorder instead of list.index(..) which takes O(N)
-        Use index instead of list as parameter
+#         if not preorder or not inorder:
+#             return 
+    
+#         root = TreeNode(preorder[0])
+#         idx = inorder.index(preorder[0])
+#         root.left = self.buildTree(preorder[1: idx+1], inorder[:idx])
+#         root.right = self.buildTree(preorder[idx+1:], inorder[idx+1:])
+#         return root
 
-        Time O(n^2) 
-        Space O(n^2) 
-        
         """
-        map_inorder = {}    # instead of list.index(..) which takes O(N)
-        for i, val in enumerate(inorder): map_inorder[val] = i
+        Treat preorder as mutable object
         
-        def build(low, high):
-            if low > high:
-                return None
-            root = TreeNode(preorder.pop())
-            ind = map_inorder[root.val]
-            root.left = build(low, ind-1)
-            root.right = build(ind+1, high)
-            return root
+        In Python, if a mutable object is passed as a function parameter, its value is adaptive to recursive calls; while if an immutable object is passed as a function parameter, its value is fixed to every recursive call.
             
-        preorder.reverse()
-        return build(0, len(inorder)-1)
+        Here list - preorder - is mutable.
+        """
+        
+        if inorder:
+            # get root from front of inorder list
+            root_val = preorder.pop(0)
+            root = TreeNode(root_val)
+            
+            # split preorder list into left and right branch 
+            idx = inorder.index(root_val)
+            root.left = self.buildTree(preorder, inorder[0:idx])    
+            root.right = self.buildTree(preorder, inorder[idx+1:])
+            return root
