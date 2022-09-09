@@ -1,16 +1,20 @@
 class MinStack:       
     def __init__(self):
-        self.stack = [(-1, float('inf'))]
+        self.stack = []
 
     def push(self, x):
-        self.stack.append([x, min(x, self.stack[-1][1])]) # maintain current stack min at self.stack[-1][1]
+        if self.stack:
+            self.stack.append([x, min(x, self.stack[-1][1])]) 
+        else:
+            self.stack.append([x, x])
 
     def pop(self): 
-        if len(self.stack) > 1: self.stack.pop()
+        if self.stack: 
+            self.stack.pop()
 
     def top(self):
-        if len(self.stack) == 1: return None
-        return self.stack[-1][0]
+        if self.stack: 
+            return self.stack[-1][0]
 
     def getMin(self): # getMin operations will always be called on non-empty stacks
         return self.stack[-1][1]
