@@ -15,27 +15,27 @@ class Solution:
         BFS
         
         Time O(n)
-        Space O(width) = O(6000/2)
+        Space O(width) 
         
         """
         
-#         if not root: return None
+        if not root: return None
         
-#         queue = collections.deque([root])   # to store nodes on each level
+        queue = collections.deque([root])   # to store nodes on each level
         
-#         while queue:
-#             width = len(queue)
-#             level = []
-#             for i in range(width):
-#                 node = queue.popleft()
-#                 level.append(node)
-#                 if node.left: queue.append(node.left)
-#                 if node.right: queue.append(node.right)
+        while queue:
+            width = len(queue)
+            level = []
+            for i in range(width):
+                node = queue.popleft()
+                level.append(node)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
                     
-#             for i in range(width-2, -1, -1):
-#                 level[i].next = level[i+1]
+            for i in range(width-1):
+                level[i].next = level[i+1]
         
-#         return root
+        return root
 
 
         """
@@ -47,25 +47,26 @@ class Solution:
         
         """
 
-        cur = root
+#         cur = root
+#         queue = cur
         
-        while queue:
+#         while queue:
             
-            cur = queue
-            dummyhead = pre = Node(0) # create a linked list; dummyhead.next is start of one level below cur
+#             cur = queue
+#             dummyhead = pre = Node(0) # create a linked list; dummyhead.next is start of one level below cur
             
             
-            while cur:
-                if cur.left:                    
-                    pre.next = cur.left
-                    pre = cur.left
+#             while cur:
+#                 if cur.left:                    
+#                     pre.next = cur.left
+#                     pre = cur.left
 
-                if cur.right:
-                    pre.next = cur.right
-                    pre = cur.right
+#                 if cur.right:
+#                     pre.next = cur.right
+#                     pre = cur.right
 
-                cur = cur.next
+#                 cur = cur.next
             
-            queue = dummyhead.next  # go one level down
+#             queue = dummyhead.next  # go one level down
 
-        return root
+#         return root
