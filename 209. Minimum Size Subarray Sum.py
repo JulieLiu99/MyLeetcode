@@ -7,12 +7,18 @@ class Solution:
         Space O(1)
         
         """
-        res = len(nums) + 1
+        n = len(nums)
+        cur_sum = 0
         i = 0
+        res = n + 1 # impossible, always larger than any valid answer
         for j in range(len(nums)):
-            target -= nums[j]
-            while target <= 0: # elements seen so far have reached sum
+            cur_sum += nums[j]
+            while cur_sum >= target:
                 res = min(res, j - i + 1)
-                target += nums[i]
+                cur_sum -= nums[i]
                 i += 1
-        return res % (len(nums) + 1)
+                
+        if res == n + 1:
+            return 0
+        else:
+            return res
