@@ -58,7 +58,7 @@ class Solution:
         
         """
         if not root:
-            return root
+            return
 
         dummy = Node()
         self.prev = dummy
