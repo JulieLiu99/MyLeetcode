@@ -1,7 +1,8 @@
 class ProductOfNumbers:
     """
     Similar to prefix sum. We can record the prefix product.
-                    prefix product[i+1]: product from 0th to ith
+    prefix[i+1]: product from nums[0] to nums[i]
+    prefix[j+1]/prefix[i]: product from nums[i] to nums[j]
     [3,0,2,5,4]     
     ^               [1]
      ^              [1,3]
@@ -19,13 +20,13 @@ class ProductOfNumbers:
         self.prefix = [1]
 
     def add(self, num: int) -> None:
-        if num == 0: #  reinitilise to [1]
+        if num == 0: #  re-initialize to [1]
             self.prefix = [1]
         else:
             self.prefix.append(self.prefix[-1] * num)
 
     def getProduct(self, k: int) -> int:
-        if k >= len(self.prefix): 
+        if k >= len(self.prefix): # either not enough nums or reinitialized from middle 0
             return 0
         return self.prefix[-1] // self.prefix[-k-1]
 

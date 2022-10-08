@@ -41,7 +41,15 @@ class Solution:
         
         """
         visited = set()
-        def dfs(x, y, dx, dy):
+        
+        def go_back():
+            robot.turnRight()
+            robot.turnRight()
+            robot.move()
+            robot.turnRight()
+            robot.turnRight()
+            
+        def backtrack(x, y, dx, dy):
             # 1, Clean current
             robot.clean()
             visited.add((x, y))
@@ -49,14 +57,10 @@ class Solution:
             # 2, Clean next
             for _ in range(4):
                 if (x + dx, y + dy) not in visited and robot.move():
-                    dfs(x + dx, y + dy, dx, dy)
+                    backtrack(x + dx, y + dy, dx, dy)
+                    go_back()
+                    
                 robot.turnRight()
                 dx, dy = dy, -dx # update direction
-
-            # 3, Back to previous position and direction
-            robot.turnRight(); robot.turnRight()
-            robot.move()
-            robot.turnRight(); robot.turnRight()
-
         
-        dfs(0, 0, 0, 1) # any valid starting point
+        backtrack(0, 0, 0, 1) # any valid starting point

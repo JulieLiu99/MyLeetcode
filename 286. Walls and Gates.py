@@ -13,17 +13,19 @@ class Solution:
         rows = len(rooms)
         cols = len(rooms[0])
         q = collections.deque()
-        for r in range(rows): # bfs from gates
+        for r in range(rows): 
             for c in range(cols):
-                if rooms[r][c] == 0:
+                if rooms[r][c] == 0: # bfs from gates
                     q.append((r, c))
-
+        
+        # q = [gate0, gate1, gate2, ...their direct neighbor, ... their neighbor's neighbor]
+        # guaranteed that unvisited cell gets its distance from the nearest gate
         while q:
             r, c = q.popleft()
-            for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                if 0 <= r+x < rows and 0 <= c+y < cols and rooms[r+x][c+y] == 2147483647:
-                    rooms[r+x][c+y] = rooms[r][c] + 1 # update neighbors, if they are not visited
-                    q.append((r+x, c+y))
+            for i, j in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                if 0 <= r+i < rows and 0 <= c+j < cols and rooms[r+i][c+j] == 2147483647: # unvisited neighbor cell
+                    rooms[r+i][c+j] = rooms[r][c] + 1 
+                    q.append((r+i, c+j))
 
         """
         DFS - TLE
