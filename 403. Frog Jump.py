@@ -7,6 +7,7 @@ class Solution:
         Space O(n^2)
         """
         memo = set() # to save the dead ends, for early termination
+        start = stones[0]
         target = stones[-1]
         stones = set(stones)
         
@@ -17,15 +18,17 @@ class Solution:
             if cur == target:
                 return True
 
-            if cur > target or cur < 0 or speed <= 0 or cur not in stones:
+            if cur > target or cur < 0 or speed <= 0:
                 return False
             
             for next_speed in [speed-1, speed, speed+1]:
                 if (cur + next_speed) in stones:
-                    if dfs(cur + next_speed, next_speed, target):
+                    if dfs(cur + next_speed, next_speed, target): # jump to next
                         return True
 
             memo.add((cur, speed))
             return False
-
-        return dfs(1, 1, target)
+        
+        if start + 1 not in stones: # assume the first jump must be 1 unit
+            return False
+        return dfs(start + 1, 1, target)
