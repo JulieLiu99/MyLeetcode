@@ -17,6 +17,21 @@ class Solution:
         [0, 2, 10]
         ...
         
+        Why sort by width, small to big, but sort by hight, big to small? 
+        If sort hight small to bit too, we will get duplicates in the list!
+        [[4, 5], [4, 6]] WRONG!
+        
+        Correct example:
+        (1, 9) [9]
+        (2, 3) [3]
+        (2, 2) [2]
+        (5, 4) [2, 4]
+        (6, 7) [2, 4, 7]
+        (6, 4) [2, 4, 7]
+        (6, 1) [1, 4, 7]
+        (7, 8) [1, 4, 7, 8]
+        (7, 6) [1, 4, 6, 8]
+        
         Time O(nlogn)
         """
         envelopes.sort(key=lambda x: (x[0], -x[1])) # sort by width, small to big; sort by hight, big to small
