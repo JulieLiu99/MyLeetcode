@@ -1,10 +1,11 @@
 class Solution:
     """
+    Prefix Sum + Binary Search
+    
     convert weights in to array of running sums 
     [1, 3]
     [1, 4]: [1, 2-3-4]
-    return the index where [1, self.prefixSums[-1]) fall into
-    e.g. for random value = 2/3/4, return 1
+    For random value = 2/3/4, return 1
     
     Time O(n) for Solution(w)
     Time O(logn) for pickIndex
@@ -26,13 +27,11 @@ class Solution:
         r = len(self.prefixSums) 
         while l + 1 != r:
             m = l + (r-l)//2
-            if self.prefixSums[m] == value :
-                return m
-            elif self.prefixSums[m] > value:
-                r = m
-            else:
+            if self.prefixSums[m] < value:
                 l = m
-        return r   # because self.prefixSums[l] is strictly smaller than value
+            else:
+                r = m
+        return r
 
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(w)
