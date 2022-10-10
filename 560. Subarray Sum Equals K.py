@@ -1,59 +1,54 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         """
-        Brute force: Sliding window O(n^2) time
+        Two pointers, try all interval sums
         
-        Better: Prefix sum
-        presum[i] = nums[0] + ... + nums[i]
-        sum[i...j] = presum[j] - presum[i-1]
+        Sliding window is inclusive: [l: r+1]
+        Use prefix sum instead of adding all values within window
+        Sum for nums[l: r+1] = presum[r+1] - presum[l]
+        presum[i] = nums[0] + ... + nums[i-1]
+
+        Time O(n^2): for every l pointer, needs to try r pointer from l to n-1
         
-        Cannot sort + One pass: need continuous subarray
-        
-        Time O(n^2)
-        Space O(n)
-        
-        TLE still :(
-         
         """
-#         res = 0
-#         presum = [nums[0]]
-#         n = len(nums)
+#         presum = [0] # presum[1] = nums[0]
         
-#         # calculate prefix sum
-#         for i in range(1, n):
-#             presum.append(presum[i-1] + nums[i])
-#             # i == 0, from first num onwards
-#             if presum[i-1] == k: res += 1
-#         if presum[n-1] == k: res += 1
+#         for i in range(len(nums)):
+#             presum.append(presum[-1] + nums[i])
+
+#         counter = 0
         
-#         # from second num onwards
-#         for i in range(1, n):
-#             for j in range(i, n):
-#                 if presum[j] - presum[i-1] == k:
-#                     res += 1
-                    
-#         return res
-                
+#         for l in range(len(nums)):
+#             for r in range(l, len(nums)):
+#                 if presum[r+1] - presum[l] == k:
+#                     counter += 1
+        
+#         return counter
+
         """
         Running Sum
         
-        Increment result when:
-        sums[up to now] - sums[till a previous point] = k
+        For each running sum, find how many previous subarrays sums to (running sum - k)
         
         Time O(n)
         Space O(n)
         
-        """
-        res = 0
-        sums = 0
-        sum_count = collections.defaultdict(int)
-        
-        # If sums==k, it should've been sums-0=k. To account for this case, we include the 0.
-        sum_count[0] = 1
+        """    
+        running_sum = 0
+        hashmap = {0: 1} # when running_sum = k, counter += 1
+        counter = 0
         
         for num in nums:
-            sums += num
-            res += sum_count[sums-k]
-            sum_count[sums] += 1
-        
-        return res
+            
+            running_sum += num
+            extra = running_sum - k
+            
+            if extra in hashmap:
+                counter += hashmap[extra]
+                
+            if running_sum in hashmap:
+                hashmap[running_sum] += 1
+            else:
+                hashmap[running_sum] = 1
+            
+        return counter

@@ -5,6 +5,9 @@ class Solution:
         DP[r+1][c+1] = max side of square with matrix[r][c] as bottom right
         DP 0th row and 0th col are for padding
         
+        Square can expand if and only if all 3 prev neighbors are 1
+        dp[r+1][c+1] = min(dp[r][c], dp[r+1][c], dp[r][c+1]) + 1 
+        
         Time O(n^2)
         Space O(n^2)
         

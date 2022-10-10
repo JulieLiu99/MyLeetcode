@@ -1,49 +1,72 @@
-"""
-DFS Recursion
-
-Time O(width*height*4^len(word))
-where k is length of word and m and n are sizes of our board
-Start from all possible cells of board O(width*height)
-at each cell/char we can go in 4 directions
-Each dfs search is O(4^len(word)) because won't stop until the end of the word or deadend 
-In practice however this number will be usually much smaller, because of a lot of dead-ends. 
-
-Space O(len(word)) - potential size of recursion stack. 
-
-"""
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         
-        n = len(word)
-        height = len(board)
-        width = len(board[0])
+        """
+        DFS
         
-        def dfs(board, row, col, i):
-            # i is always the next char, so till n
-            if i ==  n: return True
+        use a visited set - TLE
+        mark visited in place - can pass
+        
+        Time O(rows*cols * word_length): dfs from every cell
+        Space O(word_length)
+        
+        """
+#         rows = len(board)
+#         cols = len(board[0])
+#         visited = set()
+        
+#         def dfs(i, j, k):
+            
+#             if k == len(word): # all matched
+#                 return True
+            
+#             if not (0 <= i < rows and 0 <= j < cols) or board[i][j] != word[k]: # check current
+#                 return False
+            
+#             for (new_i, new_j) in [(i+1, j), (i, j+1), (i-1, j), (i, j-1)]:
+#                 if (new_i, new_j) not in visited:
+#                     visited.add((new_i, new_j))
+#                     if dfs(new_i, new_j, k+1): 
+#                         return True
+#                     visited.remove((new_i, new_j))
+#             return False
+        
+#         for i in range(rows):
+#             for j in range(cols):
+#                 if board[i][j] == word[0] and (i, j) not in visited: # start of search
+#                     visited.add((i, j))
+#                     if dfs(i, j, 0):
+#                         return True
+#                     visited.remove((i, j))
+                
+#         return False
 
-            # out of bound
-            if row<0 or row>=height or col<0 or col>=width: return False
 
-            # not matched or taken
-            if board[row][col] != word[i]: return False
-
-            tmp = board[row][col]  
-            board[row][col] = -1    # mark as visited
-
-            res = dfs(board, row+1, col, i+1) or dfs(board, row-1, col, i+1) or dfs(board, row, col+1, i+1) or dfs(board, row, col-1, i+1)
-
-            # revert cell back before return!!!!!!!!!!!!!!!
-            # so we have correct board to start next search
-            board[row][col] = tmp   
-
-            return res
-    
-    
-        for row in range(height):
-            for col in range(width):
-                # check whether can find word, starting at (row, col) position 
-                if dfs(board, row, col, 0):
+        rows = len(board)
+        cols = len(board[0])
+        
+        def dfs(i, j, k):
+            
+            if k == len(word): # all matched
+                return True
+            
+            if not (0 <= i < rows and 0 <= j < cols) or board[i][j] != word[k]: # check current
+                return False
+            
+            char = board[i][j]
+            board[i][j] = "#"  # mark as visited
+            
+            for (new_i, new_j) in [(i+1, j), (i, j+1), (i-1, j), (i, j-1)]:
+                if dfs(new_i, new_j, k+1): 
                     return True
+            
+            board[i][j] = char # revert to unvisited
+            return False
+        
+        for i in range(rows):
+            for j in range(cols):
+                if board[i][j] == word[0]: # start of search
+                    if dfs(i, j, 0):
+                        return True
                 
         return False

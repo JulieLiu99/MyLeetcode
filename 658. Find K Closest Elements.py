@@ -17,31 +17,24 @@ class Solution:
         [1,2,3,4,5]
              ^j
         """
-        
-#         if x >= arr[-1]: # only take from the end
-#             return arr[-k:]
-        
-#         if x <= arr[0]: # only take from the front
-#             return arr[:k]
-        
-#         j = bisect.bisect_left(arr, x) # arr[j] >= x
-#         if j > 0 and arr[j]-x >= x-arr[j-1]: j -= 1 # j has value closest to x
-#         i = j-1
-        
-#         # find arr[i+1 ~ j]
-#         while j - i < k and i >= 0 and j + 1 < len(arr):
-#             if arr[j+1]-x < x-arr[i]:
-#                 j += 1
-#             else: # arr[j+1]-x >= x-arr[i]
-#                 i -= 1
-                
-#         if j - i < k and i < 0:  # need more from the end
-#             j += k - (j-i) 
+        r = bisect_left(arr, x) # first i such that arr[i] >= x
+        l = r 
+
+        while r - l < k: # window arr[l:r], expand from center
+            if l == 0:
+                r += 1
+                continue
             
-#         elif j - i < k and j + 1 >= len(arr):  # need more from the front
-#             i -= k - (j-i) 
+            if r == len(arr):
+                l -= 1
+                continue
+                
+            if abs(arr[l-1] - x) <= abs(arr[r] - x):
+                l -= 1
+            else:
+                r += 1
         
-#         return arr[i+1:j+1]
+        return arr[l:r]
 
         """
         Instead of going from value closest to x in the middle of arr
@@ -51,15 +44,14 @@ class Solution:
         Space O(1)
         
         """
-    
-        i = 0
-        j = len(arr) - 1
+#         i = 0
+#         j = len(arr) - 1
         
-        while j-i+1 != k: # arr[i~j]
-            if x - arr[i] > arr[j] - x:
-                i += 1
-            else:
-                j -= 1
+#         while j-i+1 != k: # arr[i~j]
+#             if x - arr[i] > arr[j] - x:
+#                 i += 1
+#             else:
+#                 j -= 1
         
-        return arr[i:j+1]
+#         return arr[i:j+1]
         

@@ -18,13 +18,13 @@ class MedianFinder:
         
         # if same length, add to large
         if len(self.small) == len(self.large):
-            push_to_large = -heappushpop(self.small, -num) # max([small], num)
-            heappush(self.large, push_to_large)
+            max_from_small = -heappushpop(self.small, -num) # max([small], num)
+            heappush(self.large, max_from_small)
             
         # if large has one more than small, add to small
         else:
-            push_to_small = heappushpop(self.large, num) # min([large], num)
-            heappush(self.small, -push_to_small)
+            min_from_large = heappushpop(self.large, num) # min([large], num)
+            heappush(self.small, -min_from_large)
                 
     def findMedian(self) -> float:
         if len(self.small) == len(self.large):

@@ -7,8 +7,8 @@ class Solution:
         
         """
         
-        c_counter = 0
-        w_counter = 0
+        c_counter = 0 # character counter
+        w_counter = 0 # word counter
         res = []
         
         for word in words:
@@ -32,8 +32,8 @@ class Solution:
                 if extra_space and w_counter > 1:
                     even_space = extra_space//(w_counter-1)
                     left_space = extra_space%(w_counter-1)
-                    i = 1
-                    while i <= len(res[-1])-1:
+                    i = 0
+                    while i < len(res[-1]):
                         # res[-1][i] is a new space after end of word
                         # add extra space before it
                         if res[-1][i] == " " and res[-1][i-1] != " ":

@@ -77,12 +77,15 @@ class Solution:
         At current index for example, you have at least gas[current index] to go, plus non-negative gas from before, but still not enough to move forward --> cannot be start_index.
         Same logic for all previous indexes.
         
+        Q: how to gaurantee we can complete route? we never test it.
+        A: we can just leave the costly ones at the end, and we know there is enough gas to cover all costs
+        
         Time O(n)
         Space O(1)
         
         """
-
-        if (sum(gas) - sum(cost) < 0):
+        # not enough gas to cover all costs
+        if sum(cost) > sum(gas):
             return -1
         
         gas_tank = 0
@@ -91,8 +94,9 @@ class Solution:
         for i in range(len(gas)):
             gas_tank += gas[i] - cost[i]
             
-            if gas_tank < 0:
-                start_index = i+1
+            # none of the indexes along the path can be a starting point
+            if gas_tank < 0: 
+                start_index = i+1 # try next index as starting point
                 gas_tank = 0
             
         return start_index

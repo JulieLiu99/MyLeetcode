@@ -5,7 +5,7 @@ class Solution:
         
         Whenver we have an operater and a number
         If + or -: push num or -num into stack
-        If * or /: pop previous num, do the calculation, and push result to stack
+        If * or /: calculate with top of stack num
         
         Time O(n)
         Space O(n)
@@ -34,17 +34,15 @@ class Solution:
                     stack.append(-curNum)
                     
                 elif operator == "*":
-                    prev = stack.pop()
-                    stack.append(prev * curNum)
+                    stack[-1] *= curNum
                     
-                else:
-                    prev = stack.pop()
-                    if prev % curNum and prev/curNum < 0:
-                        stack.append(prev//curNum + 1) # truncate toward zero
-                    else:
-                        stack.append(prev//curNum )
+                else: # round to zero
+                    sign = 1 if stack[-1] / curNum > 0 else -1
+                    val = abs(stack[-1]) // curNum
+                    stack[-1] = val * sign
                 
                 operator = c # record new operator
-                curNum = 0 # reinitiate for new number
+                curNum = 0 # reinitialize for new number
                     
         return sum(stack)
+        
