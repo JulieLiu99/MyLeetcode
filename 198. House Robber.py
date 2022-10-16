@@ -7,9 +7,20 @@ class Solution:
         Space O(1)
         
         """
-        nums = [0, 0, 0] + nums
-        for i in range(3, len(nums)):
-            r2 = nums[i-2] + nums[i]
-            r3 = nums[i-3] + nums[i]
-            nums[i] = max(r2, r3) + nums[i]
-        return max(nums)
+        n = len(nums)
+        dp = [0]* n # dp[i]: max robbed at nums[i]
+        if n >= 1: dp[0] = nums[0]
+        if n >= 2: dp[1] = max(nums[0], nums[1])
+        for i in range(2, n):
+            # robbed previous one, OR did not rob previous one -> rob this one
+            dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+        return dp[-1] 
+
+        # # don't understand
+        # rob1 = 0 # max robbed, if robbed 1 before -> can't rob this one
+        # rob2 = 0 # max robbed, if did not rob 1 before -> rob this one!
+        # for num in nums:
+        #     temp = max(rob1 + num, rob2)
+        #     rob1 = rob2
+        #     rob2 = temp
+        # return rob2
