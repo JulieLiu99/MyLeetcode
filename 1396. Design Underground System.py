@@ -7,8 +7,8 @@ class UndergroundSystem:
     """
 
     def __init__(self):
-        self.idMap = dict() # (checkin_time, checkin_station)
-        self.timeMap = dict() # (count, total_time)
+        self.idMap = {} # (checkin_time, checkin_station)
+        self.timeMap = {} # (count, total_time)
 
     def checkIn(self, id: int, stationName: str, t: int) -> None:
         self.idMap[id] = (t, stationName)
