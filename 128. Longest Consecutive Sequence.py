@@ -25,7 +25,7 @@ class Solution:
         """
         Look up in set
         
-        Time O(n)
+        Time O(n^2)
         Space O(n)
         
         """
