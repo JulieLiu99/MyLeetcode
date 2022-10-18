@@ -104,6 +104,6 @@ class Solution:
             cur.next = nextt
             if nextt:
                 copy.next = nextt.next
-            cur = nextt
+            cur = cur.next
             copy = copy.next
         return head_copy
