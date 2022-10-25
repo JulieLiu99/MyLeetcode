@@ -22,9 +22,9 @@ class Solution:
         return num
     
     def num_to_list(self, num):
-        # none <- 3 
-        # none <- 3 <- 2
-        # none <- 3 <- 2 <- 1
+        # 3 -> none
+        # 2 -> 3 -> none
+        # 1 -> 2 -> 3 -> none
         if num == 0: 
             return ListNode(0)
         tail = None
@@ -58,10 +58,10 @@ class Solution:
 
 
 #     def reverseList(self, head): # 7 -> 2 -> 4 -> 3 -> none TO none <- 7 <- 2 <- 4 <- 3
-#         tail = None
+#         prev = None
 #         while head:
-#             prev = head.next
-#             head.next = tail
-#             tail = head 
-#             head = prev
-#         return tail
+#             nextt = head.next
+#             head.next = prev
+#             prev = head 
+#             head = nextt
+#         return prev
