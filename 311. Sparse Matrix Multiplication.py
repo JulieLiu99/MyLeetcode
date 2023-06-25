@@ -1,24 +1,36 @@
 class Solution:
     def multiply(self, mat1: List[List[int]], mat2: List[List[int]]) -> List[List[int]]:
         """
-        Result matrix: rows = rows1, cols = cols2
+        Result matrix: rows = rows1, cols = cols2, l inner dimension
+
+        Naiive implementation: 
+        Time: O(rows * cols * l)
+        However, many elements along each l dimension are zeros.
         
-        Space O(cols1)
-        Time O(rows1 * (cols1 + rows2 * cols2))
+        Optimization:
+        Traverse mat1's l dimension and record nonzero indices&values.
+        Only look at corresponding indices in mat2's l dimension.
+        Space: O(nonzero k's)
+        Time: O(rows * (l + cols * nonzero k's))
         
         """
         rows = len(mat1)
         cols = len(mat2[0])
         l = len(mat1[0])  # length of one multiplication
         res = [[0 for _ in range(cols)] for _ in range(rows)]
+
         for row in range(rows):
-            vals = {}
-            for col1 in range(l):
-                if mat1[row][col1]:
-                    vals[col1] = mat1[row][col1]
-            if vals:
-                for row2 in range(l):
-                    for col in range(cols):
-                        if mat2[row2][col] and row2 in vals:
-                            res[row][col] += vals[row2] * mat2[row2][col] 
+
+            # for col in range(cols):
+            #     for k in range(l):
+            #         res[row][col] += mat1[row][k] * mat2[k][col]
+
+            mat1_nonzero = {}
+            for k in range(l):
+                if mat1[row][k]:
+                    mat1_nonzero[k] = mat1[row][k]
+            for col in range(cols):
+                for k in mat1_nonzero.keys():
+                    res[row][col] += mat1_nonzero[k] * mat2[k][col] 
+
         return res
