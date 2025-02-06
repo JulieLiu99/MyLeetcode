@@ -1,6 +1,7 @@
 """
 Use hashmap 
 
+Assuming vectors have number of nonzero values = n1 & n2
 dotProduct: Time O(min(n1, n2))
 Space O(n1 + n2)
 
@@ -13,10 +14,9 @@ Only try to multiply those non-zero vals with corresponding vals in the second v
 """
 
 class SparseVector:
-    def __init__(self, nums: List[int]): # this is the sparse one
+    def __init__(self, nums: List[int]):
         self.nonzeros = {idx:val for idx,val in enumerate(nums) if val != 0}
 
-    # Return the dotProduct of two sparse vectors
     def dotProduct(self, vec: 'SparseVector') -> int:
         res = 0
         
