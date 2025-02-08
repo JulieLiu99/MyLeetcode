@@ -35,20 +35,21 @@ class Solution:
         
         """    
         running_sum = 0
-        hashmap = {0: 1} # when running_sum = k, counter += 1
-        counter = 0
+        prev_running_sum_count = {0: 1}
+        result = 0
         
         for num in nums:
             
             running_sum += num
+
             extra = running_sum - k
             
-            if extra in hashmap:
-                counter += hashmap[extra]
+            if extra in prev_running_sum_count:
+                result += prev_running_sum_count[extra]
                 
-            if running_sum in hashmap:
-                hashmap[running_sum] += 1
+            if running_sum in prev_running_sum_count:
+                prev_running_sum_count[running_sum] += 1
             else:
-                hashmap[running_sum] = 1
+                prev_running_sum_count[running_sum] = 1
             
-        return counter
+        return result
