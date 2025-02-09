@@ -33,6 +33,15 @@ class Solution:
                     
 #         return result
 
+        """
+        Brute force is 3 pointers
+
+        Improved solution is:
+        Two pointers + Dictionary of seen values
+
+        Time O(n^2)
+        Space O(n)
+        """
         n = len(nums)
         res = set()
         target = 0
@@ -41,11 +50,11 @@ class Solution:
             if i > 0 and nums[i] == nums[i-1]: # skip duplicates
                 continue
                 
-            two_sum = {} # num: i
+            seen = {} # num: i
             for j in range(i+1, n):
-                if target - nums[i] - nums[j] in two_sum:
+                if target - nums[i] - nums[j] in seen:
                     res.add(tuple(sorted([nums[i], nums[j], target - nums[i] - nums[j]])))
                 else:
-                    two_sum[nums[j]] = i
+                    seen[nums[j]] = i
                     
         return list(res)
