@@ -17,4 +17,4 @@ class Solution:
                 hashmap[key] = [st]
             else:
                 hashmap[key] += [st]
-        return hashmap.values()
+        return list(hashmap.values())
