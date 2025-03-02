@@ -31,7 +31,8 @@ class Solution:
         # return nums[k-1]
         
         """
-        Quick Sort
+        Recursion + Kinda like binary search
+        Note that K is not zero indexed!
         
         Time O(n)
         Space O(1)
@@ -45,9 +46,14 @@ class Solution:
         
         L, M = len(left), len(mid)
         
+        # Kth largest is in left array
         if k <= L:
             return self.findKthLargest(left, k)
+
+        # Kth largest is in right array
         elif k > L + M:
             return self.findKthLargest(right, k - L - M)
+
+        # Kth largest is in middle array where all values are equal
         else:
             return mid[0]
