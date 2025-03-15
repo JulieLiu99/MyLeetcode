@@ -1,24 +1,23 @@
 class Solution:
-    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
-        
+    def intervalIntersection(self, A: List[List[int]], B: List[List[int]]) -> List[List[int]]:
         """
-        Time O(M+N): scanning through the two lists
-        Space O(M+N): mamimum size of intersections[]
-        
+        Two pointers scanning through two lists
+        Merge intervals for each pair
+        Time O(m+n)
+        Space O(m+n)
         """
-        
         intersections = []
         i = j = 0
-    
-        while i < len(firstList) and j < len(secondList): 
-            
-            # Check for intersection
-            if firstList[i][0] <= secondList[j][1] and secondList[j][0] <= firstList[i][1]:
-                
-                intersections.append([max(firstList[i][0], secondList[j][0]), min(firstList[i][1], secondList[j][1])])
 
-            # Move on from the interval with a smaller endpoint
-            if firstList[i][1] < secondList[j][1]:
+        while i < len(A) and j < len(B):
+            # Check if A[i] intersects B[j]
+            start = max(A[i][0], B[j][0])
+            end = min(A[i][1], B[j][1])
+            if start <= end:
+                intersections.append([start, end])
+
+            # Remove the interval with the smallest endpoint
+            if A[i][1] < B[j][1]:
                 i += 1
             else:
                 j += 1
