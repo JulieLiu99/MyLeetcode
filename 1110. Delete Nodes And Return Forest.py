@@ -10,6 +10,10 @@ class Solution:
     ) -> List[TreeNode]:
         """
         Postorder traversal
+        Delete node: Return None to parent's call
+                        node.left = dfs(node.left)
+                        node.right = dfs(node.right)
+        Return roots: Add children as roots whenever parent node is deleted
 
         Time O(n)
         Space O(n)
