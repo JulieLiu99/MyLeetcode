@@ -9,17 +9,16 @@ class Solution:
         """
         Preorder Traversal
         
+        Keep track of current number as a str
         If left: cur += left.val
         If right: cur += right.val
         
-        Before return to node, remove last char in cur
+        At end of each path, record the number 
         
         Time O(n)
         Space O(n)
         
-        """
-        if not root: return
-        
+        """        
         nums = []
         
         def preorder(node, cur):
