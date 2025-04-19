@@ -17,14 +17,11 @@ class Solution:
         Space O(1)
         
         """
-        if not root:
-            return -1
-        
         closest = root.val
                 
         while root:
-            
-            if abs(target-root.val) < abs(target-closest):
+            if abs(target - root.val) < abs(target - closest) or \
+               (abs(target - root.val) == abs(target - closest) and root.val < closest):
                 closest = root.val
 
             if root.val > target:
@@ -32,4 +29,4 @@ class Solution:
             else:
                 root = root.right
             
-        return closest 
+        return closest
