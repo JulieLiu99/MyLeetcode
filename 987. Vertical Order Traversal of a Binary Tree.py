@@ -7,35 +7,30 @@
 class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
         """
-        BFS
+        BFS 
+        Save (col, row, value) for each node
+        Sort nodes & group by col
         
-        Deque: (node, row, col) down row+1, left col-1, right col+1
-        Append col, row, val to a list
-        In the end, sort the list, append the vals of the same cols to the same sublist
-        
-        Time O(n)
+        Time O(nlogn)
         Space O(n)
-        
         """
-        q = collections.deque([(root, 0, 0)])
-        nodes = [(0, 0, root.val)]
+        nodes = []
+        q = deque([(root, 0, 0)])  # (node, row, col)
+
         while q:
-            for _ in range(len(q)):
-                node, row, col = q.popleft()
-                if node.left:
-                    q.append((node.left, row + 1, col - 1))
-                    nodes.append((col - 1, row + 1, node.left.val))
-                if node.right:
-                    q.append((node.right, row + 1, col + 1))
-                    nodes.append((col + 1, row + 1, node.right.val))
-                    
-        nodes.sort() # sort by col first, then row, then val
-        i = 0
-        result = []
-        while i < len(nodes):
-            result.append([nodes[i][2]])
-            while i + 1 < len(nodes) and nodes[i + 1][0] == nodes[i][0]: # same col
-                result[-1].append(nodes[i + 1][2])
-                i += 1
-            i += 1
-        return result
+            node, row, col = q.popleft()
+            nodes.append((col, row, node.val))
+            if node.left:
+                q.append((node.left, row + 1, col - 1))
+            if node.right:
+                q.append((node.right, row + 1, col + 1))
+
+        nodes.sort()  # sorts by col, then row, then val
+        res = []
+        prev_col = float('-inf')
+        for col, row, val in nodes:
+            if col != prev_col:
+                res.append([])
+                prev_col = col
+            res[-1].append(val)
+        return res
