@@ -11,8 +11,8 @@ class Solution:
         """
         hashmap = {}
         for index, num in enumerate(nums):
-            another_num = target - num
-            if another_num in hashmap:
-                return [hashmap[another_num], index]
+            complement = target - num
+            if complement in hashmap:
+                return [hashmap[complement], index]
             hashmap[num] = index
         return None
