@@ -1,25 +1,29 @@
+from collections import defaultdict, Counter
+from itertools import combinations
+
 class Solution:
     def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
         
-        # Time O(nlogn) + O(m p!) + O(p!)
-        # Space O(n) + O(m) + O(p!)
+        # Time O(n log n) + O(m * p^3) + O(p^3)
+        # Space O(n) + O(p^3)
         # m: number of users, p: number of websites
          
-        graph = defaultdict(list)
+        user2sites = defaultdict(list)
         for u, t, w in sorted(zip(username, timestamp, website)): # sort by user and time
-            graph[u].append(w)
+            user2sites[u].append(w)
         
         # {'james': ['home', 'cart', 'maps', 'home'], 
         #  'joe': ['home', 'about', 'career'], 
         #  'mary': ['home', 'about', 'career']}
                     
-        counter = Counter()
-        for username, website in graph.items():
-            for triple in set(itertools.combinations(website, 3)):
-                counter[triple]+=1
+        pattern_count = Counter()
+        for user, sites in user2sites.items():
+            unique_triples = set(combinations(sites, 3))
+            for triple in unique_triples:
+                pattern_count[triple] += 1
         
         max_pattern, max_count = None, 0
-        for pattern, count in counter.items():
+        for pattern, count in pattern_count.items():
             if count > max_count:
                 max_pattern = pattern
                 max_count = count
