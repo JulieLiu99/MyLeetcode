@@ -10,14 +10,15 @@ class Solution:
 
         Retun min distance for land reachable by all buildings
 
-        Time: O(B * R * C), B number of buildings, R rows, C cols
+        Time: O(B * R * C), B number of buildings, R rows, C = cols
         Space: O(R * C)
         """
         rows = len(grid)
         cols = len(grid[0])
-                
-        dists = [[0] * cols for _ in range(rows)] #  distance from all buildings to loc
-        can_reach = [[0] * cols for _ in range(rows)] # number of buildings loc can reach
+        
+        # (list is faster than map, given many lands)
+        dists = [[0] * cols for _ in range(rows)] # total distance to reach all buildings
+        can_reach = [[0] * cols for _ in range(rows)] # number of reachable buildings
 
         def bfs(row, col):
             q = collections.deque([(row, col, 0)])
@@ -30,9 +31,9 @@ class Solution:
                     nc = c + dc
                     if 0 <= nr < rows and 0 <= nc < cols and (nr, nc) not in seen and grid[nr][nc] == 0:
                         can_reach[nr][nc] += 1 # loc is reachable by building
-                        dists[nr][nc] += d + 1
+                        dists[nr][nc] += d + 1 # loc has d + 1 distance from building
                         seen.add((nr, nc))
-                        q.append((nr, nc, d+1)) # loc has d + 1 distance from building
+                        q.append((nr, nc, d+1))
                         
         buildings = 0
         for row in range(rows):
@@ -48,4 +49,5 @@ class Solution:
                     min_dist = min(min_dist, dists[r][c])
         
         return min_dist if min_dist != float('inf') else -1
+
 
