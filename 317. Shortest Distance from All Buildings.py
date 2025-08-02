@@ -17,11 +17,9 @@ class Solution:
         """
         rows = len(grid)
         cols = len(grid[0])
-        
-        if rows == cols == 1: return -1 # no place to build new building
-        
-        dists = [[0] * cols for _ in range(rows)]
-        can_reach = [[0] * cols for _ in range(rows)]
+                
+        dists = [[0] * cols for _ in range(rows)] #  distance from all buildings to loc
+        can_reach = [[0] * cols for _ in range(rows)] # number of buildings loc can reach
 
         def bfs(row, col):
             q = collections.deque([(row, col, 0)])
