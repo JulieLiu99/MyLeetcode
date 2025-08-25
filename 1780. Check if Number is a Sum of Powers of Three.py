@@ -19,7 +19,7 @@ class Solution:
         Space O(1)
         """
         while n > 0:
-            if n % 3 == 2: # each power can only be present (1) or non present (2)
+            if n % 3 == 2: # each power can only be present (1) or non present (0)
                 return False
             # move to the next greater power
             n //= 3
