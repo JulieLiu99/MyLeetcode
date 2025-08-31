@@ -1,31 +1,30 @@
 class Solution:
     def numBusesToDestination(self, routes: List[List[int]], source: int, target: int) -> int:
         """
-        BFS with bus stops as nodes
+        BFS with bus routes as nodes, discovered via stops
 
-        Time O(m^2 k) where m is size of routes, k is ma size of a route
+        Time O(mk) where m is number of routes, k is max size of a route
         Space O(mk)
         """
         if source == target:
             return 0
 
-        # Create a graph where each node is a bus route
+        # Convert routes to sets for fast membership checks
         routes = list(map(set, routes))
-        graph = defaultdict(set)
-        for i, route1 in enumerate(routes):
-            for j in range(i+1, len(routes)):
-                route2 = routes[j]
-                if route1.intersection(route2):
-                    graph[i].add(j)
-                    graph[j].add(i)
 
-        # Find the bus routes that contain the source and target
-        source_routes = {i for i, route in enumerate(routes) if source in route}
-        target_routes = {i for i, route in enumerate(routes) if target in route}
+        # Build stop -> routes mapping
+        stop_to_routes = defaultdict(list)
+        for i, route in enumerate(routes):
+            for stop in route:
+                stop_to_routes[stop].append(i)
 
-        # BFS to find the shortest path from source to target
+        # Find all routes that contain the source
+        source_routes = set(stop_to_routes.get(source, []))
+        target_routes = set(stop_to_routes.get(target, []))
+
+        # BFS over routes
         visited = set()
-        queue = deque([(route, 1) for route in source_routes])
+        queue = deque([(r, 1) for r in source_routes])
         while queue:
             route, buses = queue.popleft()
             if route in target_routes:
@@ -33,8 +32,13 @@ class Solution:
             if route in visited:
                 continue
             visited.add(route)
-            for next_route in graph[route]:
-                if next_route not in visited:
-                    queue.append((next_route, buses + 1))
+
+            # Explore all routes connected via any stop in this route
+            for stop in routes[route]:
+                for next_route in stop_to_routes[stop]:
+                    if next_route not in visited:
+                        queue.append((next_route, buses + 1))
+                # clear to avoid re-processing the same stop
+                stop_to_routes[stop].clear()
 
         return -1
