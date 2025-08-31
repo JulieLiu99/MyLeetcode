@@ -10,7 +10,7 @@ class Solution:
             return 0
 
         # Convert routes to sets for fast membership checks
-        routes = list(map(set, routes))
+        routes = [set(route) for route in routes]
 
         # Build stop -> routes mapping
         stop_to_routes = defaultdict(list)
@@ -42,3 +42,4 @@ class Solution:
                 stop_to_routes[stop].clear()
 
         return -1
+
