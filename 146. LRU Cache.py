@@ -1,14 +1,15 @@
 """
+Double LinkedList + Hashmap
 
-Python Dict + Double LinkedList
-- access to a random key in O(1) --> hashtable
-  key: pointer to node in list
-- remove the last entry in LRU cache in O(1) --> list
-  tail is the least recently used
-- add/move an entry to the front of LRU cache in O(1) --> list
+Front is the most recently used
+Tail is the least recently used
+Each get/put: move/add a node to the front
+If reach capacity, remove the last entry
+
+Use hashmap to quickly look up any node in list
+key: pointer to node in list
 
 get and put in O(1) time 
-
 """
 
 class Node:
@@ -55,10 +56,10 @@ class LRUCache:
 
     def _add(self, node):
         n = self.head.next
+        node.next = n
         n.prev = node
         self.head.next = node
         node.prev = self.head
-        node.next = n
         
 
 # Your LRUCache object will be instantiated and called as such:
