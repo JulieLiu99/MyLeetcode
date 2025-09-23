@@ -2,7 +2,11 @@ class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         """
         Two pointers
-        Map of chars and indices last seen
+        Keep track of chars and indices last seen
+        
+        a b c a ...
+          ^ ^ ^
+        window without repeating char
 
         Time O(n)
         Space O(n)
