@@ -1,27 +1,20 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        
         """
+        Two pointers
+        Map of chars and indices last seen
+
         Time O(n)
         Space O(n)
-        
         """
-        
-        n = len(s)
+        left = 0 # start of current window
+        seen = {} # char: idx
         ans = 0
-        # mp stores the current next index of a character
-        mp = {}
 
-        i = 0
-        
-        # try to extend the range [i, j]
-        
-        for j in range(n):  # j is the right pointer
-            if s[j] in mp:  # checking can be done in O(1)
-                i = max(mp[s[j]], i)    # update i, left pointer
-                                        # if s[j] is to the right side of i
-
-            ans = max(ans, j - i + 1)   # update the range [i, j]
-            mp[s[j]] = j + 1
-
+        for right, char in enumerate(s):
+            if char in seen:
+                # start window from where char was last seen
+                left = max(left, seen[char] + 1)  
+            ans = max(ans, right - left + 1)
+            seen[char] = right
         return ans
