@@ -78,12 +78,12 @@ class Solution:
 
             # 2. Drop: compress positives downward; fill remainder with zeros
             for col in range(n):
-                write = m - 1
+                next_row = m - 1
                 for row in range(m - 1, -1, -1):
-                    if board[row][col] > 0:            # keep only positive
-                        board[write][col] = board[row][col]
-                        write -= 1
-                for row in range(write, -1, -1):
+                    if board[row][col] > 0: # only keep positive
+                        board[next_row][col] = board[row][col]
+                        next_row -= 1
+                for row in range(next_row, -1, -1):
                     board[row][col] = 0
 
         return board
