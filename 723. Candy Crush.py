@@ -58,7 +58,7 @@ class Solution:
         while True:
             crushed = False
 
-            # 1. Mark in place (negate) any horizontal or vertical run ≥ 3
+            # 1. Mark in place: negate any horizontal or vertical run ≥ 3
             for i in range(m):
                 for j in range(n):
                     if board[i][j] == 0: # empty cell
