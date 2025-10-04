@@ -10,6 +10,7 @@ class Solution:
         Time O(n)
         Space O(n)
         
+        Optimization: No need of stack. Keep track of total and last number.
         """
         stack = []
         s += "#" # ending mark, so that last operator & curNum can be processed
@@ -36,10 +37,8 @@ class Solution:
                 elif operator == "*":
                     stack[-1] *= curNum
                     
-                else: # round to zero
-                    sign = 1 if stack[-1] / curNum > 0 else -1
-                    val = abs(stack[-1]) // curNum
-                    stack[-1] = val * sign
+                else: # '/'
+                    stack[-1] = int(stack[-1] / curNum)  # truncate toward zero
                 
                 operator = c # record new operator
                 curNum = 0 # reinitialize for new number
