@@ -8,13 +8,13 @@ class Solution:
         Space O(1)
         
         """
-        l = 1
-        r = max(piles)
-        while l < r:
+        l = 0
+        r = max(piles) + 1
+        while l + 1 != r:
             m = l + (r-l) // 2
             time = sum([math.ceil(pile/m) for pile in piles])
             if time > h: # too slow
-                l = m + 1
+                l = m
             else:
                 r = m
         return r
