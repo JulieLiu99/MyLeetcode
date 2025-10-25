@@ -26,11 +26,11 @@ class Solution:
         
         pq keeps the current open events.
         
-        Each day, we add new events starting on day d to the queue pq.
-        We also remove the events that are already closed.
-        Then we greedily attend the event that ends the soonest.
+        Each day, add new events starting on that day to the queue pq.
+        Then greedily attend the event that ends the soonest.
+        Remove all other events that end by that day.
         
-        Time O(nlogn): For sorting. Each even goes into pq once and gets out once, so O(n).
+        Time O(nlogn): For sorting. Each even goes into queue once and gets out once, so O(n).
         Space O(n): pq[]
         
         """
