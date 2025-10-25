@@ -42,19 +42,59 @@ class Solution:
         Time O(n^2)
         Space O(n)
         """
-        n = len(nums)
-        res = set()
-        target = 0
+        # n = len(nums)
+        # res = set()
+        # target = 0
         
-        for i in range(n-2):
+        # for i in range(n-2):
+        #     if i > 0 and nums[i] == nums[i-1]: # skip duplicates
+        #         continue
+                
+        #     seen = {} # num: i
+        #     for j in range(i+1, n):
+        #         if target - nums[i] - nums[j] in seen:
+        #             res.add(tuple(sorted([nums[i], nums[j], target - nums[i] - nums[j]])))
+        #         else:
+        #             seen[nums[j]] = i
+                    
+        # return list(res)
+
+        """
+        Sorted nums + Two pointers
+
+        Fix the first element nums[i], then two-pointer on (l, r)
+
+        Time O(n^2)
+        Space O(1)
+        """
+        nums.sort()
+        n = len(nums)
+        res = []
+
+        # fix the first element nums[i], then two-pointer on (l, r)
+        for i in range(n - 2):
+
             if i > 0 and nums[i] == nums[i-1]: # skip duplicates
                 continue
-                
-            seen = {} # num: i
-            for j in range(i+1, n):
-                if target - nums[i] - nums[j] in seen:
-                    res.add(tuple(sorted([nums[i], nums[j], target - nums[i] - nums[j]])))
+
+            l, r = i + 1, n - 1
+            while l < r:
+                s = nums[i] + nums[l] + nums[r]
+
+                if s < 0: # need larger sum
+                    l += 1
+                elif s > 0: # need smaller sum
+                    r -= 1
                 else:
-                    seen[nums[j]] = i
-                    
-        return list(res)
+                    res.append([nums[i], nums[l], nums[r]])
+                    # advance both pointers past duplicates
+                    l += 1
+                    r -= 1
+                    while l < r and nums[l] == nums[l - 1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r + 1]:
+                        r -= 1
+
+        return res
+
+
