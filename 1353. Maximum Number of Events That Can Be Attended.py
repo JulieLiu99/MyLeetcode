@@ -54,7 +54,7 @@ class Solution:
             heappop(pq)  # attend the event that ends the soonest
             res += 1
             
-            while pq and pq[0] <= cur_day: # ignore events that are ended
+            while pq and pq[0] <= cur_day: # ignore events that have ended
                 heappop(pq)
             
             cur_day += 1
