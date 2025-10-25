@@ -22,11 +22,11 @@ class Solution:
 #         return sum(seen)
         
         """
-        Priority Queue 
+        Priority Queue (min heap in python)
         
         pq keeps the current open events.
         
-        Each day, we add new events starting on day d tothe queue pq.
+        Each day, we add new events starting on day d to the queue pq.
         We also remove the events that are already closed.
         Then we greedily attend the event that ends the soonest.
         
@@ -51,11 +51,12 @@ class Solution:
                 heappush(pq, events[i][1])
                 i += 1
                 
-            heappop(pq)  # attend this one event that ends the soonest
+            heappop(pq)  # attend the event that ends the soonest
             res += 1
-            cur_day += 1
             
-            while pq and pq[0] < cur_day: # remove all events ended by tomorrow
+            while pq and pq[0] <= cur_day: # ignore events that are ended
                 heappop(pq)
+            
+            cur_day += 1
            
         return res
