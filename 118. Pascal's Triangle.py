@@ -3,10 +3,10 @@ class Solution:
         
         """
         Apart from the first and final element 1,
-        Each row is derived by summing up pairs of elements from the prev_rowious row.
+        Each element is sum of pairs of elements from the prev_row.
         
         Time O(n): each element gets summed once or twice
-        Space O(numRows): for tesmporary new_row[]
+        Space O(numRows): for tesmporary prev_row & row
         
         """
         
