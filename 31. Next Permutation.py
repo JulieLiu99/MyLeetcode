@@ -4,54 +4,48 @@ class Solution:
         Search by pointers
         Thinking through heights
         Try not to touch front part -> so that we find only the next larger nums
-        
-        1) Swap the last "ascending" position with the last num bigger than it
-        2) Make nums from last peak onwards ascending
-        
-        1 2 3      1 3 2
-            /        /\
-          /         /  \
-        /          /
 
-                    l r       nums
-                        [1, 3, 5, 2, 8, 4]
-                                  ^ last ascending
-        after 1)    4 5 [1, 3, 5, 4, 8, 2]
-                                     ^ last peak 
-        after 2)    5 4 [1, 3, 5, 4, 2, 8]
+                        [1, 3, 2, 8, 5, 4]
+                               ^pivot   ^swap
+
+                                  / \
+                                 /    \
+                                        \
+                   
+        after swap      [1, 3, 4, 8, 5, 2]
+                                  ^peak
+
+        after reverse   [1, 3, 4, 2, 5, 8]
         
         Time O(n)
         Space O(1)
-        
         """
         
-        i = j = len(nums)-1
-        
-        # find the last peak of position i 
-        while i > 0 and nums[i-1] >= nums[i]:
-            i -= 1
+        # find the last "drop" searching from right
+        # that's the num to bump for the next permutation
+        pivot = None
+        for i in range(len(nums) - 2, -1, -1):
+            if nums[i] < nums[i + 1]:
+                pivot = i
+                break
          
-        # nums are in descending order -> already largest arrangement
-        if i == 0:
+        # nums is descending -> already the largest arrangement
+        if pivot is None:
             nums.reverse()
             return 
         
-        k = i - 1   # k is the last "ascending" position 
+        # tail is mono decreasing
+        # find the num that's just bigger than nums[pivot]
+        swap = len(nums) - 1
+        while nums[swap] <= nums[pivot]:
+            swap -= 1
+        nums[pivot], nums[swap] = nums[swap], nums[pivot]  
         
-        # find the last j such that its value bigger than the last "ascending" position 
-        while nums[j] <= nums[k]:
-            j -= 1
-        # swap to make the bigger value the last "ascending" position 
-        nums[k], nums[j] = nums[j], nums[k]  
+        # since nums is descending from peak onwards
+        # reverse tail to get smallest nums among the greater arrangements
+        peak = pivot + 1
+        nums[peak:] = reversed(nums[peak:])
+        return
         
-        # since nums is descending from last peak onwards
-        # reverse second part to get smallest nums among the greater arrangements
-        l = i
-        r = len(nums)-1  
-        
-        while l < r:
-            nums[l], nums[r] = nums[r], nums[l]
-            l += 1 
-            r -= 1
         
         
