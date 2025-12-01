@@ -25,29 +25,31 @@ class Solution:
                 c_counter += len(word) + 1
                 w_counter += 1
                 
-            # line full
+            # line full, handle extra space
             else:
-                # handle extra space in existing line
                 extra_space = maxWidth - c_counter
+
+                # if multiple words, distribute space
                 if extra_space and w_counter > 1:
-                    even_space = extra_space//(w_counter-1)
-                    left_space = extra_space%(w_counter-1)
-                    i = 0
+                    gaps = w_counter - 1
+                    even_space = extra_space // gaps
+                    extra_slots = extra_space % gaps
+
+                    i = 1
                     while i < len(res[-1]):
-                        # res[-1][i] is a new space after end of word
-                        # add extra space before it
-                        if res[-1][i] == " " and res[-1][i-1] != " ":
-                            if left_space:
-                                res[-1] = res[-1][:i] + " "*(even_space+1) + res[-1][i:]
-                                left_space -= 1
-                                i += even_space+1
+                        if res[-1][i] == " " and res[-1][i-1] != " ": # gap
+                            if extra_slots > 0:
+                                insert = " " * (even_space + 1)
+                                extra_slots -= 1
                             else:
-                                res[-1] = res[-1][:i] + " "*even_space + res[-1][i:]
-                                i += even_space
+                                insert = " " * even_space
+                            res[-1] = res[-1][:i] + insert + res[-1][i:]
+                            i += len(insert)
                         i += 1
+
                 # if only one word, append space to right
                 elif extra_space and w_counter == 1:
-                    res[-1] += " "*extra_space
+                    res[-1] += " " * extra_space
                 
                 # add word to new line
                 res.append(word)
@@ -57,6 +59,6 @@ class Solution:
         # handle extra space in last line
         extra_space = maxWidth - c_counter
         if extra_space:
-            res[-1] += " "*extra_space
+            res[-1] += " " * extra_space
                 
         return res
