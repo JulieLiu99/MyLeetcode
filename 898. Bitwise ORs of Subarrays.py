@@ -6,7 +6,11 @@ class Solution:
         At each new num, OR it with the prev results
         Avoids recomputing ORs of prev subarrays
 
-        Time O(nB), where B is number of bits (≤ 30), effectively O(n)
+        Time O(nB), where B is number of bits (≤ 30), effectively O(n). 
+        As we OR numbers, bits only change from 0 to 1, and never back to 0 
+        -> OR values can increase only B times before they stop changing 
+        -> prev never grows beyond ~30 numbers
+        
         Space O(B) ≈ O(1)
         """
         all_or_values = set()
