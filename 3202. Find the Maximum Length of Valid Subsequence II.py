@@ -5,7 +5,7 @@ class Solution:
 
         nums = [1, 2, 1]
                 ----
-                    ----  answer is 3
+                   ----   answer is 3
         %2   = [1, 0, 1]
                 ^     ^
         every other num has the same remainder -> subsequence length + 1
@@ -16,16 +16,14 @@ class Solution:
         Time O(nk)
         Space O(k^2)
         """
-        # dp[a][b] = len of the longest subsequence, where
-        # the last two numbers have remainders a, b
+        # dp[a][b] = len of the longest subsequence, where the last two nums have remainders a, b
         dp = [[0] * k for _ in range(k)]
         max_length = 0
 
         for num in nums:
             cur_remainder = num % k
 
-            # subsequence does not have to be continuous
-            # check all possible prev nums
+            # subsequence does not have to be continuous -> check all possible prev nums
             for prev_remainder in range(k):
                 # extend cur -> prev -> cur
                 #                    ^^^^^^ len + 1
