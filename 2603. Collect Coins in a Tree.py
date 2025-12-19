@@ -51,7 +51,7 @@ class Solution:
                 deg[node] = 0
 
         
-        # Phase 3: count the edges that have deg > 0
+        # Phase 3: count the remaining edges
         edge_count = 0
         for u, v in edges:
             if deg[u] > 0 and deg[v] > 0:
