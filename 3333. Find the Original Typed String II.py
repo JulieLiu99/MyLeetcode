@@ -1,3 +1,4 @@
+
 class Solution:
     def possibleStringCount(self, word: str, k: int) -> int:
         """
@@ -6,6 +7,9 @@ class Solution:
                 ->    aaa  bb  c
         group size     3   2   1
         combinations = 3 x 2 x 1 = 6 (to keep at least one per group)
+
+        Time O(n + g*k)
+        Space O(max(groups, k))
         """
         if not word:
             return 0
@@ -28,11 +32,13 @@ class Solution:
         if k <= len(groups):
             return total
 
-        dp = [0] * k # dp[s] = num of ways to select exactly s chars
+        # track invalid ways of selecting such that total pick is [0, k-1] < k
+        # dp[s] = num of ways to select exactly s chars
+        dp = [0] * k
         dp[0] = 1
 
         # sliding window sums valid ways to pick [1, count] chars from each group
-        for count in groups：
+        for count in groups:
             new_dp = [0] * k
             ways_to_select = 0
 
@@ -51,5 +57,6 @@ class Solution:
 
             dp = new_dp
 
-        invalid = sum(dp[len(groups):k]) % MOD # total picks < k -> invalid
+        invalid = sum(dp) % MOD
+        # numbers have been taken modulo so + MOD to avoid negatives
         return (total - invalid + MOD) % MOD
