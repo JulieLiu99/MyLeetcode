@@ -12,11 +12,14 @@ class Solution:
 
         At r = 4: (2, 4) forbids starts <= 2
         => start_limit = 2
-        => valid subarrays ending at 4 start at 3 or 4
+        => valid subarrays ending at 4 start at 3
 
         At r = 5: (3, 5) forbids starts <= 3
         => start_limit = 3
-        => valid subarrays ending at 5 start at 4 or 5
+        => valid subarrays ending at 5 start at 4
+
+        => prev_start_limit = 2
+        => if (3, 5) is removed, valid subarrays ending at 5 start at 3
 
         Time:  O(n + m)
         Space: O(n + m)
