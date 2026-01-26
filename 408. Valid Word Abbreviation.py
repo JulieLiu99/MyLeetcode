@@ -30,10 +30,9 @@ class Solution:
                     x = x * 10 + int(abbr[j])
                 j += 1
                 i += x
-                if i > len(word): return False   # x is too large, not enough word characters
             else:
                 return False
 
-        if i < len(word) or j < len(abbr):
+        if i != len(word) or j != len(abbr): # not exactly match
             return False
         return True
